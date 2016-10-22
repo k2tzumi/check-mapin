@@ -64,21 +64,20 @@ $(function(){
   // 緯度経度変換
   function convertGeoCode(address) {
     var geocoder = new google.maps.Geocoder();
-    var deferred = $.Deferred();
 
-    //住所から座標を取得する
-    geocoder.geocode({
-      'address': address,
-      'region': 'jp'
-    }, function(results, status) {
-      if (status === google.maps.GeocoderStatus.OK) {
-        deferred.resolve(results[0]);
-      } else {
-        deferred.reject(new Error(status));
-      }
-    });
-
-    return deferred.promise();
+    return $.Deferred(function(deferred) {
+      //住所から座標を取得する
+      geocoder.geocode({
+        'address': address,
+        'region': 'jp'
+      }, function(results, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+          deferred.resolve(results[0]);
+        } else {
+          deferred.reject(new Error(status));
+        }
+      });
+    }).promise();
   }
 
   // 現在位置を取得
