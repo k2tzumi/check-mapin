@@ -20,7 +20,11 @@ p {line-height: 180%;}
 <script type="text/javascript">
 // <![CDATA[
 $(function(){
-  var map = new google.maps.Map($('#map-canvas'));
+  var options = {
+    zoom: 8,
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  };
+  var map = new google.maps.Map($("#map-canvas").get(0), options);
   var bounds = new google.maps.LatLngBounds();
 
   // TODO: json取得
