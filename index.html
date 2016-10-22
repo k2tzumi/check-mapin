@@ -13,31 +13,41 @@ p {line-height: 180%;}
 }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!--
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
--->
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load('visualization', '1', {packages: ['corechart']});
+</script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkk2rNYX35JKRC12ceqz2tKB9UKcWa8TE"></script>
 <script type="text/javascript">
 // <![CDATA[
 $(function(){
   var options = {
     zoom: 8,
-    mapTypeId: google.maps.MapTypeId.TERRAIN
+    mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   var map = new google.maps.Map($("#map-canvas").get(0), options);
   var bounds = new google.maps.LatLngBounds();
 
-  // TODO: json取得
-  var addresses = [
-    "〒150-0031 東京都渋谷区桜丘町15-17",
-    "〒150-0002 東京都渋谷区渋谷3-29-17",
-    "〒150-0042 東京都渋谷区宇田川町4-3",
-    "〒150-0002 東京都渋谷区渋谷3-26-21",
-    "〒150-0001 東京都渋谷区神宮前6-24-4"
-  ];
+  var key = "1Ta8AbAaWFQ7UKa1rAHERuumGGZRTvAE-wu841mkDsYc";
+
+  var query = new google.visualization.Query('http://spreadsheets.google.com/tq?key=' + key + '&pub=1');
+
+  query.setQuery("SELECT name, address");
+  query.send(handleSelectResponse);
+
+  function handleSelectResponse(response) {
+    if (response.isError()) {
+      alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+      return;
+    }
+    var data = response.getDataTable();
+	  for (i = 0; i < data.getNumberOfRows(); i++) {
+      stabPin(data.getValue(i, 0), data.getValue(i, 1), i);
+    }
+	}
 
   // Pinを刺す 
-  var stabPin = function(address, i) {
+  function stabPin(name, address, i) {
     convertGeoCode(address).then(function(result) {
       var position = result.geometry.location;
       // マーカー表示
@@ -50,8 +60,8 @@ $(function(){
       // 情報Windows
       var content = result.formatted_address;
       var infoWindow = new google.maps.InfoWindow({
-        // content: addresses[i],
-        content: content,
+        content: name + '<br>' + address,
+        // content: content,
         position: position,
         size: new google.maps.Size(50,50)
       });
@@ -72,10 +82,6 @@ $(function(){
       console.log(err);
     });
   }
-
-  // Mapへpin
-  addresses.map(stabPin);
-
   // 緯度経度変換
   function convertGeoCode(address) {
     var geocoder = new google.maps.Geocoder();
