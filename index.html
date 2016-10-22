@@ -31,7 +31,7 @@ google.setOnLoadCallback(function() {
 
     var query = new google.visualization.Query('//spreadsheets.google.com/tq?key=' + key + '&pub=1');
 
-    query.setQuery("SELECT B, C WHERE A >= 10 AND A <= 110 LIMIT 100");
+    query.setQuery("SELECT B, C WHERE A >= 10 AND A <= 110 LIMIT 30");
     query.send(handleSelectResponse);
 
     function handleSelectResponse(response) {
