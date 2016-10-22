@@ -42,7 +42,7 @@ google.setOnLoadCallback(function() {
       var data = response.getDataTable();
   	  for (i = 0; i < data.getNumberOfRows(); i++) {
         stabPin(data.getValue(i, 0), data.getValue(i, 1), i);
-        sleep(100);
+        sleep(1);
       }
   	}
 
@@ -129,7 +129,7 @@ google.setOnLoadCallback(function() {
       return $.Deferred(function(deferred) {
         setTimeout(function() {
           // 指定時間経過後にresolveしてdeferredを解決する
-          d.resolve(msec);
+          deferred.resolve(msec);
         }, msec);
       }).promise();
     }
