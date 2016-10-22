@@ -12,10 +12,10 @@ p {line-height: 180%;}
   background: #eee;
 }
 </style>
-<script type="text/javascript" src="//www.google.com/jsapi?key=AIzaSyCkk2rNYX35JKRC12ceqz2tKB9UKcWa8TE"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyCkk2rNYX35JKRC12ceqz2tKB9UKcWa8TE"></script>
 <script type="text/javascript">
 // <![CDATA[
-google.load('jquery', '3.1.1');
 google.load('visualization', '1', {packages: ['corechart']});
 google.load('maps', '3', {"other_params": "sensor=true"});
 google.setOnLoadCallback(function() {
@@ -29,7 +29,7 @@ google.setOnLoadCallback(function() {
 
     var key = "1Ta8AbAaWFQ7UKa1rAHERuumGGZRTvAE-wu841mkDsYc";
 
-    var query = new google.visualization.Query('http://spreadsheets.google.com/tq?key=' + key + '&pub=1');
+    var query = new google.visualization.Query('//spreadsheets.google.com/tq?key=' + key + '&pub=1');
 
     query.setQuery("SELECT name, address");
     query.send(handleSelectResponse);
