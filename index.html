@@ -31,7 +31,7 @@ google.setOnLoadCallback(function() {
 
     var query = new google.visualization.Query('//spreadsheets.google.com/tq?key=' + key + '&pub=1');
 
-    query.setQuery("SELECT name, address");
+    query.setQuery("SELECT A, B");
     query.send(handleSelectResponse);
 
     function handleSelectResponse(response) {
