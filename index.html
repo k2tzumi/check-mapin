@@ -5,11 +5,107 @@
 <title>check map-in</title>
 <style type="text/css">
 p {line-height: 180%;}
+#map-canvas {
+  width: 800px;
+  height: 600px;
+  margin: 0 auto;
+  background: #eee;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!--
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkk2rNYX35JKRC12ceqz2tKB9UKcWa8TE"></script>
+-->
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
 <script type="text/javascript">
 // <![CDATA[
+$(function(){
+  var map = new google.maps.Map($('#map-canvas'));
+  var bounds = new google.maps.LatLngBounds();
+
+  // TODO: json取得
+  var addresses = [
+    "〒150-0031 東京都渋谷区桜丘町15-17"
+  ];
+
+  // Mapへpin
+  addresses.map(stabPin(address, i));
+
+  // Pinを刺す 
+  function stabPin(address, i) {
+    convertGeoCode(address).then(function(result) {
+      var position = result.geometry.location;
+      // マーカー表示
+      var marker = new google.maps.Marker({
+        position: position,
+        label: (i + 1),
+        animation: google.maps.Animation.DROP,
+        map: map
+      });
+      // 情報Windows
+      var content = result.formatted_address;
+      var infoWindow = new google.maps.InfoWindow({
+        content: address,
+        position: position,
+        size: new google.maps.Size(50,50)
+      });
+
+      // Marker fitting
+      bounds.extend(position);
+      map.fitBounds(bounds);
+
+      // zoom 調整 
+      if　(i === 0) map.setZoom(18);
+    }, function(err) {
+      console.log(err);
+    });
+  }
+
+  // 緯度経度変換
+  function convertGeoCode(address) {
+    var geocoder = new google.maps.Geocoder();
+    var deferred = $.Deferred();
+
+    //住所から座標を取得する
+    geocoder.geocode({
+      'address': address,
+      'region': 'jp'
+    }, function(results, status) {
+      if (status === google.maps.GeocoderStatus.OK) {
+        deferred.resolve(results[0]);
+      } else {
+        deferred.reject(new Error(status));
+      }
+    });
+
+    return deferred.promise();
+  }
+
+  // 現在位置を取得
+  function geolocation() {
+    var deferred = $.Deferred();
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            deferred.resolve(position.coords);
+        },
+        function (error) {
+            deferred.reject(error.code);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 600000
+        }
+      );
+    } else {
+        deferred.reject();
+    }
+
+    return deferred.promise();
+  }
+});
 // ]]>
 </script>
 </head>
