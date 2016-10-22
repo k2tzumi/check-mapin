@@ -17,7 +17,7 @@ p {line-height: 180%;}
 <script type="text/javascript">
 // <![CDATA[
 google.load('visualization', '1', {packages: ['corechart']});
-google.load('maps', '3.21', { 'other_params': 'libraries=places&sensor=false&key=AIzaSyCkk2rNYX35JKRC12ceqz2tKB9UKcWa8TE'});
+google.load('maps', '3.21', { 'other_params': 'libraries=places&key=AIzaSyCkk2rNYX35JKRC12ceqz2tKB9UKcWa8TE'});
 google.setOnLoadCallback(function() {
   $(function(){
     var options = {
@@ -31,7 +31,7 @@ google.setOnLoadCallback(function() {
 
     var query = new google.visualization.Query('//spreadsheets.google.com/tq?key=' + key + '&pub=1');
 
-    query.setQuery("SELECT A, B");
+    query.setQuery("SELECT B, C WHERE A >= 10 AND A <= 20");
     query.send(handleSelectResponse);
 
     function handleSelectResponse(response) {
@@ -41,43 +41,48 @@ google.setOnLoadCallback(function() {
       }
       var data = response.getDataTable();
   	  for (i = 0; i < data.getNumberOfRows(); i++) {
-        stabPin(data.getValue(i, 0), data.getValue(i, 1), i);
+        searchStabPin(data.getValue(i, 0), data.getValue(i, 1), i);
         // sleep(1);
       }
   	}
 
+    function stabPin(name, position, i) {
+      // マーカー表示
+      var marker = new google.maps.Marker({
+        position: position,
+        //label: (i + 1).toString(),
+        animation: google.maps.Animation.DROP,
+        map: map
+      });
+      // 情報Windows
+      // var content = result.formatted_address;
+      var infoWindow = new google.maps.InfoWindow({
+        // content: name + '<br>' + address,
+        content: name,
+        // content: content,
+        position: position,
+        size: new google.maps.Size(50,50)
+      });
+      // click event
+      google.maps.event.addListener(marker,
+        'click',
+        function(event) {
+          infoWindow.open(map, marker);
+        });
+
+      // Marker fitting
+      bounds.extend(position);
+      map.fitBounds(bounds);
+
+      // zoom 調整 
+      if　(i === 0) map.setZoom(18);
+    }
+
     // Pinを刺す 
-    function stabPin(name, address, i) {
+    function searchStabPin(name, address, i) {
       convertGeoCode(address).then(function(result) {
         var position = result.geometry.location;
-        // マーカー表示
-        var marker = new google.maps.Marker({
-          position: position,
-          //label: (i + 1).toString(),
-          animation: google.maps.Animation.DROP,
-          map: map
-        });
-        // 情報Windows
-        var content = result.formatted_address;
-        var infoWindow = new google.maps.InfoWindow({
-          content: name + '<br>' + address,
-          // content: content,
-          position: position,
-          size: new google.maps.Size(50,50)
-        });
-        // click event
-        google.maps.event.addListener(marker,
-          'click',
-          function(event) {
-            infoWindow.open(map, marker);
-          });
-
-        // Marker fitting
-        bounds.extend(position);
-        map.fitBounds(bounds);
-
-        // zoom 調整 
-        if　(i === 0) map.setZoom(18);
+        stabPin(name, position, i);
       }, function(err) {
         console.log(err);
       });
