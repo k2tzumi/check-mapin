@@ -31,7 +31,7 @@ google.setOnLoadCallback(function() {
 
     var query = new google.visualization.Query('//spreadsheets.google.com/tq?key=' + key + '&pub=1');
 
-    query.setQuery("SELECT B, C WHERE A >= 10 AND A <= 110 LIMIT 30");
+    query.setQuery("SELECT B, C WHERE A >= 10 AND A <= 110 LIMIT 50");
     query.send(handleSelectResponse);
 
     function handleSelectResponse(response) {
@@ -40,9 +40,10 @@ google.setOnLoadCallback(function() {
         return;
       }
       var data = response.getDataTable();
-  	  for (i = 0; i < data.getNumberOfRows(); i++) {
-        searchStabPin(data.getValue(i, 0), data.getValue(i, 1), i);
-        // sleep(1);
+  	  for (row = 0; row < data.getNumberOfRows(); row++) {
+        sleep(1000).done(function () {
+          searchStabPin(data.getValue(row, 0), data.getValue(row, 1), i);
+        });
       }
   	}
 
