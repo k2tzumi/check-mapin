@@ -28,13 +28,8 @@ $(function(){
     "〒150-0031 東京都渋谷区桜丘町15-17"
   ];
 
-  // Mapへpin
-  addresses.map(function(address, i) {
-    stabPin(address, i);
-  });
-
   // Pinを刺す 
-  function stabPin(address, i) {
+  var stabPin = function(address, i) {
     convertGeoCode(address).then(function(result) {
       var position = result.geometry.location;
       // マーカー表示
@@ -47,7 +42,8 @@ $(function(){
       // 情報Windows
       var content = result.formatted_address;
       var infoWindow = new google.maps.InfoWindow({
-        content: addresses[i],
+        // content: addresses[i],
+        content: content,
         position: position,
         size: new google.maps.Size(50,50)
       });
@@ -62,6 +58,9 @@ $(function(){
       console.log(err);
     });
   }
+
+  // Mapへpin
+  addresses.map(stabPin);
 
   // 緯度経度変換
   function convertGeoCode(address) {
