@@ -29,7 +29,10 @@ $(function(){
 
   // TODO: json取得
   var addresses = [
-    "〒150-0031 東京都渋谷区桜丘町15-17"
+    "〒150-0031 東京都渋谷区桜丘町15-17",
+    "〒150-0002 東京都渋谷区渋谷3-29-17",
+    "〒150-0042東京都渋谷区宇田川町4-3",
+    "〒150-0002東京都渋谷区渋谷3-29-17"
   ];
 
   // Pinを刺す 
@@ -51,6 +54,12 @@ $(function(){
         position: position,
         size: new google.maps.Size(50,50)
       });
+      // click event
+      google.maps.event.addListener(marker,
+        'click',
+        function(event) {
+          infoWindow.open(map, marker);
+        });
 
       // Marker fitting
       bounds.extend(position);
