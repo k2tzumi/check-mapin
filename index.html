@@ -29,7 +29,9 @@ $(function(){
   ];
 
   // Mapへpin
-  addresses.map(stabPin(address, i));
+  addresses.map(function(address, i) {
+    stabPin(address, i);
+  });
 
   // Pinを刺す 
   function stabPin(address, i) {
