@@ -42,7 +42,7 @@ google.setOnLoadCallback(function() {
       var data = response.getDataTable();
   	  for (i = 0; i < data.getNumberOfRows(); i++) {
         stabPin(data.getValue(i, 0), data.getValue(i, 1), i);
-        sleep(1);
+        // sleep(1);
       }
   	}
 
