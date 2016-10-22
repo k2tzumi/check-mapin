@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html　lang="ja">
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>check map-in</title>
@@ -42,6 +42,7 @@ google.setOnLoadCallback(function() {
       var data = response.getDataTable();
   	  for (i = 0; i < data.getNumberOfRows(); i++) {
         stabPin(data.getValue(i, 0), data.getValue(i, 1), i);
+        sleep(1);
       }
   	}
 
@@ -122,6 +123,17 @@ google.setOnLoadCallback(function() {
       }
 
       return deferred.promise();
+    }
+
+     function sleep(sec) {
+      var counter = 0;
+      var timer_id = setInterval(function() {
+        counter++;
+        //終了条件
+        if (counter == sec) {
+          learInterval(timer_id);
+        }
+      }, 1000);
     }
   });
 });
