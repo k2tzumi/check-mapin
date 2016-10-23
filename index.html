@@ -56,15 +56,20 @@ google.setOnLoadCallback(function() {
         animation: google.maps.Animation.DROP,
         map: map
       });
-      // 情報Windows
-      var infoWindow = buildInfoWindow(getHotelInfo(name));
-      // click event
-      google.maps.event.addListener(marker,
-        'click',
-        function(event) {
-          infoWindow.open(map, marker);
-        });
-
+      // Hotel情報取得
+      getHotelInfo(name).then(function(hotelInfo) {
+        // 情報Windows
+        var infoWindow = buildInfoWindow(hotelInfo);
+        // click event
+        google.maps.event.addListener(marker,
+          'click',
+          function(event) {
+            infoWindow.open(map, marker);
+          });
+      }, function(err) {
+        console.log(err);
+      });
+      
       // Marker fitting
       bounds.extend(position);
       map.fitBounds(bounds);
@@ -85,7 +90,7 @@ google.setOnLoadCallback(function() {
       var position = new google.maps.LatLng( hotelInof.latitude , hotelInof.longitude )
 
       return new google.maps.InfoWindow({
-        content: content,
+        content: content.toString(),
         position: position,
         size: new google.maps.Size(50,50)
       });
