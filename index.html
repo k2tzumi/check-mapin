@@ -82,10 +82,7 @@ google.setOnLoadCallback(function() {
         src: hotelInof.hotelThumbnailUrl
       })
       content.html(thumbnai.append(hotelInof.hotelName));
-      var position = {
-        lat: hotelInof.latitude,
-        lng: hotelInof.longitude,
-      };
+      var position = new google.maps.LatLng( hotelInof.latitude , hotelInof.longitude )
 
       return new google.maps.InfoWindow({
         content: content,
