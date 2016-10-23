@@ -90,7 +90,7 @@ google.setOnLoadCallback(function() {
       var position = new google.maps.LatLng( hotelInfo.latitude , hotelInfo.longitude )
 
       return new google.maps.InfoWindow({
-        content: content.toString(),
+        content: content,
         position: position,
         size: new google.maps.Size(50,50)
       });
@@ -173,7 +173,7 @@ google.setOnLoadCallback(function() {
          if (data.hotels != null) {
           deferred.resolve(data.hotels[0][0].hotelBasicInfo);
         } else {
-          deferred.reject(data.error + ':' + data.error_description);
+          deferred.reject(data.error + ' / ' + data.error_description);
         }
       }, function(err) {
         deferred.reject(err);
@@ -183,7 +183,7 @@ google.setOnLoadCallback(function() {
     }
 
     function abridgeScheme(url) {
-      return url.replace(/^http(s):\/\//, "\/\/");
+      return url.replace(/^(http|https):\/\//, "\/\/");
     }
 
     function sleep(msec) {
