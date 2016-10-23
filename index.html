@@ -41,9 +41,10 @@ google.setOnLoadCallback(function() {
       }
       var data = response.getDataTable();
   	  for (row = 0; row < data.getNumberOfRows(); row++) {
-        sleep(300).done(function () {
-          searchStabPin(data.getValue(row, 0), data.getValue(row, 1), row);
-        });
+        // sleep(300).done(function () {
+        //   searchStabPin(data.getValue(row, 0), data.getValue(row, 1), row);
+        // });
+        searchStabPin(data.getValue(row, 0), data.getValue(row, 1), row);
       }
   	}
 
