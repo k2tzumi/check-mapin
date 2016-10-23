@@ -163,9 +163,9 @@ google.setOnLoadCallback(function() {
         dataType: 'jsonp',
         jsonp: 'callback'
       }).done(function(data) {
-        resolve(data.hotels[0].hotel[0].hotelBasicInfo);
+        jqXHR.resolve(data.hotels[0].hotel[0].hotelBasicInfo);
       }, function(err) {
-        reject(err);
+        jqXHR.reject(err);
       });
 
       return jqXHR.promise();
