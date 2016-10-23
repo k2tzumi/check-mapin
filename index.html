@@ -78,16 +78,16 @@ google.setOnLoadCallback(function() {
       if　(i === 0) map.setZoom(18);
     }
 
-    function buildInfoWindow(hotelInof) {
+    function buildInfoWindow(hotelInfo) {
       var content = $("<a></a>", {
-        href: hotelInof.hotelInformationUrl,
+        href: hotelInfo.hotelInformationUrl,
         target: "_blank"
       });
       var thumbnai = $("<img></img>", {
-        src: hotelInof.hotelThumbnailUrl
+        src: abridgeScheme(hotelInfo.hotelThumbnailUrl)
       })
-      content.html(thumbnai.append(hotelInof.hotelName));
-      var position = new google.maps.LatLng( hotelInof.latitude , hotelInof.longitude )
+      content.text(thumbnai.append(hotelInfo.hotelName));
+      var position = new google.maps.LatLng( hotelInfo.latitude , hotelInfo.longitude )
 
       return new google.maps.InfoWindow({
         content: content.toString(),
@@ -170,12 +170,20 @@ google.setOnLoadCallback(function() {
         dataType: 'jsonp',
         jsonp: 'callback'
       }).done(function(data) {
-        deferred.resolve(data.hotels[0][0].hotelBasicInfo);
+         if (data.hotels != null) {
+          deferred.resolve(data.hotels[0][0].hotelBasicInfo);
+        } else {
+          deferred.reject(data.error + ':' + data.error_description);
+        }
       }, function(err) {
         deferred.reject(err);
       });
 
       return deferred.promise();
+    }
+
+    function abridgeScheme(url) {
+      return url.replace(/^http(s):\/\//, "\/\/");
     }
 
     function sleep(msec) {
