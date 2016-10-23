@@ -56,14 +56,7 @@ google.setOnLoadCallback(function() {
         map: map
       });
       // 情報Windows
-      // var content = result.formatted_address;
-      var infoWindow = new google.maps.InfoWindow({
-        // content: name + '<br>' + address,
-        content: name,
-        // content: content,
-        position: position,
-        size: new google.maps.Size(50,50)
-      });
+      var infoWindow = buildInfoWindow(getHotelInfo(name));
       // click event
       google.maps.event.addListener(marker,
         'click',
@@ -79,6 +72,27 @@ google.setOnLoadCallback(function() {
       if　(i === 0) map.setZoom(18);
     }
 
+    function buildInfoWindow(hotelInof) {
+      var content = $("<a></a>", {
+        href: hotelInof.hotelInformationUrl,
+        target: "_blank"
+      });
+      var thumbnai = $("<img></img>", {
+        src: hotelInof.hotelThumbnailUrl
+      })
+      content.html(thumbnai.append(hotelInof.hotelName);
+      var position = {
+        lat: hotelInof.latitude,
+        lng: hotelInof.longitude,
+      };
+
+      return new google.maps.InfoWindow({
+        content: content,
+        position: position,
+        size: new google.maps.Size(50,50)
+      });
+    }
+
     // Pinを刺す 
     function searchStabPin(name, address, i) {
       convertGeoCode(address).then(function(result) {
@@ -88,6 +102,7 @@ google.setOnLoadCallback(function() {
         console.log(err);
       });
     }
+
     // 緯度経度変換
     function convertGeoCode(address) {
       var geocoder = new google.maps.Geocoder();
@@ -129,6 +144,34 @@ google.setOnLoadCallback(function() {
       }
 
       return deferred.promise();
+    }
+
+    function getHotelInfo(name) {
+       var jqXHR = $.ajax({
+        type: 'GET',
+        url: 'https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20131024',
+        data: {
+          applicationId: '1039305981945864128',
+          affiliateId: '154a0e8a.ee3a8785.154a0e8b.1108893f',
+          searchField: 1,
+          keyword: name,
+          format: 'json',
+          callback: 'callback',
+          formatVersion: 2,
+          datumType: 1,
+          hotelThumbnailSize: 1,
+          hits: 1,
+          elements: 'hotelName,hotelInformationUrl,latitude,longitude,postalCode,address1,address2,hotelThumbnailUrl'
+        },
+        dataType: 'jsonp',
+        jsonp: 'callback'
+      }).done(function(data) {
+        resolve(data.hotels[0].hotel[0].hotelBasicInfo);
+      }, function(err) {
+        reject(err);
+      });
+
+      return jqXHR.promise();
     }
 
     function sleep(msec) {
