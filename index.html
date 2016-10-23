@@ -69,7 +69,7 @@ google.setOnLoadCallback(function() {
       }, function(err) {
         console.log(err);
       });
-      
+
       // Marker fitting
       bounds.extend(position);
       map.fitBounds(bounds);
@@ -168,7 +168,7 @@ google.setOnLoadCallback(function() {
         dataType: 'jsonp',
         jsonp: 'callback'
       }).done(function(data) {
-        jqXHR.resolve(data.hotels[0].hotel[0].hotelBasicInfo);
+        jqXHR.resolve(data.hotels[0][0].hotelBasicInfo);
       }, function(err) {
         jqXHR.reject(err);
       });
