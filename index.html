@@ -189,7 +189,7 @@ google.setOnLoadCallback(function() {
         jsonp: 'callback'
       }).done(function(data) {
          if (data.hotels != null) {
-          localStorage.setItem(key, data.hotels[0][0].hotelBasicInfo));
+          localStorage.setItem(key, data.hotels[0][0].hotelBasicInfo);
           deferred.resolve(data.hotels[0][0].hotelBasicInfo);
         } else {
           deferred.reject(data.error + ' / ' + data.error_description);
