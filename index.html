@@ -102,7 +102,7 @@ google.setOnLoadCallback(function() {
     // Pinを刺す 
     function searchStabPin(name, address, i) {
       convertGeoCode(address).then(function(result) {
-        var position = result.geometry.location;
+        var position = new google.maps.LatLng( result.lat , result.lng );
         stabPin(name, position, i);
       }, function(err) {
         console.log(err);
@@ -115,10 +115,10 @@ google.setOnLoadCallback(function() {
 
       return $.Deferred(function(deferred) {
         var key = JSON.stringify({ 'address': MD5(address) });
-        var geocode = localStorage.getItem(key);
+        var location = localStorage.getItem(key);
 
-        if (geocode) {
-          return deferred.resolve(JSON.parse(geocode));
+        if (location) {
+          return deferred.resolve(JSON.parse(location));
         }
 
         //住所から座標を取得する
@@ -127,7 +127,7 @@ google.setOnLoadCallback(function() {
           'region': 'jp'
         }, function(results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
-            localStorage.setItem(key, JSON.stringify(results[0]));
+            localStorage.setItem(key, JSON.stringify(results[0].geometry.location));
             deferred.resolve(results[0]);
           } else {
             deferred.reject(new Error(status));
