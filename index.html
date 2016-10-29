@@ -14,6 +14,8 @@ p {line-height: 180%;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyCkk2rNYX35JKRC12ceqz2tKB9UKcWa8TE"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/css/iThing.min.css" integrity="sha256-xPnIpkGaJddz0uHOJ2Uvd/fs5GmpCy9N9imz0EZyB7Y=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQDateRangeSlider.min.js" integrity="sha256-r6uyRzKiDUhc0mfN99ZIOLFNdIYOS/cfiLv8R0YArvo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 // <![CDATA[
 google.load('visualization', '1', {packages: ['corechart']});
@@ -22,6 +24,26 @@ var MD5=function(s){function L(k,d){return(k<<d)|(k>>>(32-d))}function K(G,k){va
 
 google.setOnLoadCallback(function() {
   $(function(){
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+    $("#dateRulers").dateRangeSlider({
+      bounds: {min: new Date(2006, 6, 19), max: new Date(2015, 6, 1, 23, 59, 59)},
+      defaultValues: {min: new Date(2014, 12, 1), max: new Date(2015, 6, 1)},
+      scales: [{
+        first: function(value){ return value; },
+        end: function(value) {return value; },
+        next: function(value){
+          var next = new Date(value);
+          return new Date(next.setMonth(value.getMonth() + 1));
+        },
+        label: function(value){
+          return months[value.getMonth()];
+        },
+        format: function(tickContainer, tickStart, tickEnd){
+          tickContainer.addClass("myCustomClass");
+        }
+      }]
+    });
+
     var options = {
       zoom: 8,
       mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -106,7 +128,7 @@ google.setOnLoadCallback(function() {
       //   src: abridgeScheme(hotelInfo.hotelThumbnailUrl)
       // })
       // content.text(thumbnai.append(hotelInfo.hotelName));
-      var position = new google.maps.LatLng( hotelInfo.latitude , hotelInfo.longitude )
+      var position = new google.maps.LatLng(hotelInfo.latitude , hotelInfo.longitude)
 
       return new google.maps.InfoWindow({
         content: content,
@@ -242,5 +264,6 @@ google.setOnLoadCallback(function() {
 <div class="map-embed">
 <div id="map-canvas"></div>
 </div>
+<div id="dateRulers"></div>
 </body>
 </html>
