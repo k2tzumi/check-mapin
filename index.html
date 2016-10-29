@@ -115,6 +115,10 @@ google.setOnLoadCallback(function() {
       var geocoder = new google.maps.Geocoder();
 
       return $.Deferred(function(deferred) {
+        if (address == null) {
+          deferred.reject(new Error("address is null"));
+        }
+
         var key = JSON.stringify({ 'address': MD5(address) });
         var location = localStorage.getItem(key);
 
