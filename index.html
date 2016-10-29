@@ -114,7 +114,8 @@ google.setOnLoadCallback(function() {
       var geocoder = new google.maps.Geocoder();
 
       return $.Deferred(function(deferred) {
-        var geocode = localStorage.getItem(JSON.stringify({ 'address': MD5(address) }));
+        var key = JSON.stringify({ 'address': MD5(address) });
+        var geocode = localStorage.getItem(key);
 
         if (geocode) {
           return deferred.resolve(JSON.parse(geocode));
@@ -126,7 +127,7 @@ google.setOnLoadCallback(function() {
           'region': 'jp'
         }, function(results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
-            localStorage.setItem(JSON.stringify({ 'address': MD5(address) }), JSON.stringify(results[0]));
+            localStorage.setItem(key, JSON.stringify(results[0]));
             deferred.resolve(results[0]);
           } else {
             deferred.reject(new Error(status));
@@ -162,6 +163,13 @@ google.setOnLoadCallback(function() {
     function getHotelInfo(name) {
       var deferred = $.Deferred();
 
+      var key = JSON.stringify({ 'hotel': MD5(name) });
+      var hotelInfo = localStorage.getItem(key);
+
+      if (hotelInfo) {
+        return deferred.resolve(JSON.parse(hotelInfo));
+      }
+
       $.ajax({
         type: 'GET',
         url: 'https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20131024',
@@ -181,6 +189,7 @@ google.setOnLoadCallback(function() {
         jsonp: 'callback'
       }).done(function(data) {
          if (data.hotels != null) {
+          localStorage.setItem(key, data.hotels[0][0].hotelBasicInfo));
           deferred.resolve(data.hotels[0][0].hotelBasicInfo);
         } else {
           deferred.reject(data.error + ' / ' + data.error_description);
