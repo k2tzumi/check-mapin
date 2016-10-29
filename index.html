@@ -93,7 +93,7 @@ google.setOnLoadCallback(function() {
       var position = new google.maps.LatLng( hotelInfo.latitude , hotelInfo.longitude )
 
       return new google.maps.InfoWindow({
-        content: content,
+        content: content.text(),
         position: position,
         size: new google.maps.Size(50,50)
       });
