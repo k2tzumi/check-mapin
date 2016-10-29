@@ -61,28 +61,25 @@ google.setOnLoadCallback(function() {
         map: map
       });
 
-      // Hotel情報取得
-      getHotelInfo(name).then(function(hotelInfo) {
-        // 情報Windows
-        var infoWindow = buildInfoWindow(hotelInfo);
-        // click event
-        google.maps.event.addListener(marker,
-          'click',
-          function(event) {
-            infoWindow.open(map, marker);
+      // click event
+      google.maps.event.addListener(marker,
+        'click',
+        function(event) {
+          // TODO: wait curesol
+          // Hotel情報取得
+          getHotelInfo(name).then(function(hotelInfo) {
+            // 楽天情報Windows
+            buildInfoWindow(hotelInfo).open(map, marker);
+          }, function(err) {
+            console.log(err);
+            // ダミー情報Windows
+            buildInfoWindow({
+              'hotelName': name,
+              'latitude': position.lat,
+              'longitude': position.lon
+            }).open(map, marker);
           });
-      }, function(err) {
-        console.log(err);
-
-        // 情報Windows
-        var infoWindow = buildInfoWindow({ 'hotelName': name, 'latitude': position.lat, 'longitude': position.lon });
-        // click event
-        google.maps.event.addListener(marker,
-          'click',
-          function(event) {
-            infoWindow.open(map, marker);
-          });
-      });
+        });
 
       // Marker fitting
       bounds.extend(position);
@@ -100,7 +97,7 @@ google.setOnLoadCallback(function() {
       } else {
         content = hotelInfo.hotelName;
       }
-      
+
       // var content = $("<a></a>", {
       //   href: hotelInfo.hotelInformationUrl,
       //   target: "_blank"
