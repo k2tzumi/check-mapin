@@ -73,6 +73,15 @@ google.setOnLoadCallback(function() {
           });
       }, function(err) {
         console.log(err);
+
+        // 情報Windows
+        var infoWindow = buildInfoWindow({ 'hotelName': name, 'latitude': position.lat, 'longitude': position.lon });
+        // click event
+        google.maps.event.addListener(marker,
+          'click',
+          function(event) {
+            infoWindow.open(map, marker);
+          });
       });
 
       // Marker fitting
@@ -84,7 +93,14 @@ google.setOnLoadCallback(function() {
     }
 
     function buildInfoWindow(hotelInfo) {
-      var content = '<a href="' + hotelInfo.hotelInformationUrl + '" target="_blank">' + hotelInfo.hotelName + '</a><br><img src="' + abridgeScheme(hotelInfo.hotelThumbnailUrl) +'">'
+      var content;
+
+      if (hotelInfo.hotelInformationUrl) {
+        content = '<a href="' + hotelInfo.hotelInformationUrl + '" target="_blank">' + hotelInfo.hotelName + '</a><br><img src="' + abridgeScheme(hotelInfo.hotelThumbnailUrl) +'">';
+      } else {
+        content = hotelInfo.hotelName;
+      }
+      
       // var content = $("<a></a>", {
       //   href: hotelInfo.hotelInformationUrl,
       //   target: "_blank"
