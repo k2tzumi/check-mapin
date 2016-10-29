@@ -112,12 +112,19 @@ google.setOnLoadCallback(function() {
       var geocoder = new google.maps.Geocoder();
 
       return $.Deferred(function(deferred) {
+        var geocode = localStorage.getItem({ 'address': address });
+
+        if (geocode) {
+          return deferred.resolve(JSON.parse(geocode));
+        }
+
         //住所から座標を取得する
         geocoder.geocode({
           'address': address,
           'region': 'jp'
         }, function(results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
+            localStorage.setItem({ 'address': address }, JSON.stringify(results[0]));
             deferred.resolve(results[0]);
           } else {
             deferred.reject(new Error(status));
