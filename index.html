@@ -83,7 +83,7 @@ google.setOnLoadCallback(function() {
 
     function buildInfoWindow(hotelInfo) {
       var content = $("<a></a>", {
-        href: hotelInfo.hotelInformationUrl,
+        href: hotelInfo.hotelInformationUrl
         target: "_blank"
       });
       var thumbnai = $("<img></img>", {
@@ -93,7 +93,7 @@ google.setOnLoadCallback(function() {
       var position = new google.maps.LatLng( hotelInfo.latitude , hotelInfo.longitude )
 
       return new google.maps.InfoWindow({
-        content: content.text(),
+        content: content.html(),
         position: position,
         size: new google.maps.Size(50,50)
       });
