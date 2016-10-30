@@ -15,6 +15,7 @@ p {line-height: 180%;}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/css/iThing.min.css" integrity="sha256-xPnIpkGaJddz0uHOJ2Uvd/fs5GmpCy9N9imz0EZyB7Y=" crossorigin="anonymous" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyCkk2rNYX35JKRC12ceqz2tKB9UKcWa8TE"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 <script type="text/javascript">
 // <![CDATA[
 google.load('visualization', '1', {packages: ['corechart']});
@@ -240,13 +241,13 @@ google.setOnLoadCallback(function() {
 
     function createDateRangeSlider() {
       $.when(
-        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"),
+        // $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"),
+        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSlider.min.js"),
+        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQDateRangeSliderHandle.min.js"),
         $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSliderMouseTouch.min.js"),
         $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSliderDraggable.min.js"),
         $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSliderBar.min.js"),
-        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQDateRangeSliderHandle.min.js"),
         $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQEditRangeSliderLabel.min.js"),
-        $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSlider.min.js"),
         $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSliderHandle.min.js"),
         $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQDateRangeSlider.min.js")
       ).done(function () {
