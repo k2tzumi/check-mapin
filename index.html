@@ -46,7 +46,7 @@ google.setOnLoadCallback(function() {
 
     var query = new google.visualization.Query('//spreadsheets.google.com/tq?key=' + key + '&pub=1');
 
-    query.setQuery("SELECT B, C WHERE D <= '2006-06-19' AND D >= '2011-03-29'");
+    query.setQuery("SELECT B, C WHERE D <= date '2006-06-19' AND D >= date '2011-03-29'");
     //query.setQuery("SELECT B, C");
     query.send(handleSelectResponse);
 
@@ -254,20 +254,33 @@ google.setOnLoadCallback(function() {
       $("#slider").dateRangeSlider({
         bounds: { min: new Date(2006, 6, 19), max: new Date(2015, 6, 1, 12, 59, 59) },
         defaultValues: {min: new Date(2014, 12, 1), max: new Date(2015, 6, 1)},
-        scales: [ {
-          first: function(value) { return value; },
-          end: function(value) {return value; },
-          next: function(value) {
-            var next = new Date(value);
-            return new Date(next.setMonth(value.getMonth() + 1));
+        scales: [
+          //　Primary scale
+          {
+            first: function(value) { return value; },
+            end: function(value) {return value; },
+            next: function(value) {
+              var next = new Date(value);
+              return new Date(next.setFullYear(value.getFullYear() + 1));
+            },
+            label: function(value) {
+              return value.getFullYear();
+            },
+            format: function(tickContainer, tickStart, tickEnd) {
+              tickContainer.addClass("myCustomClass");
+            }
           },
-          label: function(value) {
-            return months[value.getMonth()];
-          },
-          format: function(tickContainer, tickStart, tickEnd) {
-            tickContainer.addClass("myCustomClass");
+          // Secondary scale
+          {
+            first: function(value){ return value; },
+            stop: function(value){ return false; },
+            next: function(value) {
+              var next = new Date(value);
+              return new Date(next.setMonth(value.getMonth() + 3));
+            },
+            label: function(){ return null; }
           }
-        }]
+        ]
       });
     }
   });
