@@ -46,7 +46,7 @@ google.setOnLoadCallback(function() {
 
     var query = new google.visualization.Query('//spreadsheets.google.com/tq?key=' + key + '&pub=1');
 
-    query.setQuery("SELECT B, C WHERE D <= date '2006-06-19' AND D >= date '2011-03-29'");
+    query.setQuery("SELECT B, E WHERE F <= date '2011-01-01' AND F >= date '2011-12-31'");
     //query.setQuery("SELECT B, C");
     query.send(handleSelectResponse);
 
@@ -113,14 +113,6 @@ google.setOnLoadCallback(function() {
         content = hotelInfo.hotelName;
       }
 
-      // var content = $("<a></a>", {
-      //   href: hotelInfo.hotelInformationUrl,
-      //   target: "_blank"
-      // });
-      // var thumbnai = $("<img></img>", {
-      //   src: abridgeScheme(hotelInfo.hotelThumbnailUrl)
-      // })
-      // content.text(thumbnai.append(hotelInfo.hotelName));
       var position = new google.maps.LatLng(hotelInfo.latitude , hotelInfo.longitude)
 
       return new google.maps.InfoWindow({
@@ -252,8 +244,8 @@ google.setOnLoadCallback(function() {
     function createDateRangeSlider() {
       var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
       $("#slider").dateRangeSlider({
-        bounds: { min: new Date(2006, 6, 19), max: new Date(2015, 6, 1, 12, 59, 59) },
-        defaultValues: {min: new Date(2014, 12, 1), max: new Date(2015, 6, 1)},
+        bounds: { min: new Date(2011, 1, 1), max: new Date(2015, 12, 31, 12, 59, 59) },
+        defaultValues: {min: new Date(2011, 1, 1), max: new Date(2015, 12, 31)},
         scales: [
           //　Primary scale
           {
