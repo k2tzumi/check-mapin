@@ -261,7 +261,7 @@ google.setOnLoadCallback(function() {
             end: function(value) {return value; },
             next: function(value) {
               var next = new Date(value);
-              return new Date(value.getFullYear() + 1, 0, 1));
+              return new Date(next.getFullYear() + 1, 0, 1));
             },
             label: function(value) {
               return value.getFullYear();
@@ -276,7 +276,9 @@ google.setOnLoadCallback(function() {
             stop: function(value){ return false; },
             next: function(value) {
               var next = new Date(value);
-              return new Date(next.setMonth(value.getMonth() + 3));
+              next = new Date(next.setMonth(value.getMonth() + 3));
+              next.setDay(1);
+              return next;
             },
             label: function(){ return null; }
           }
