@@ -263,10 +263,12 @@ google.setOnLoadCallback(function() {
           end: function(value) {return value; },
           next: function(value) {
             var next = new Date(value);
-            return new Date(next.setMonth(value.getMonth() + 1));
+            // return new Date(next.setMonth(value.getMonth() + 1));
+            return new Date(next.setYear(value.getYear() + 1));
           },
           label: function(value) {
-            return months[value.getMonth()];
+            // return months[value.getMonth()];
+            return value.getFullYear();
           },
           format: function(tickContainer, tickStart, tickEnd) {
             tickContainer.addClass("myCustomClass");
