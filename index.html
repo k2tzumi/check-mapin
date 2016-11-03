@@ -85,10 +85,15 @@ google.setOnLoadCallback(function() {
   	}
 
     function stabPin(name, position, i) {
+      // マーカー存在チェック
+      if (existsMaker(name)) {
+        console.log("exists maker:" + name);
+        return;
+      }
       // マーカー表示
       var marker = new google.maps.Marker({
         position: position,
-        //label: (i + 1).toString(),
+        label: name,
         animation: google.maps.Animation.DROP,
         map: map
       });
@@ -127,6 +132,15 @@ google.setOnLoadCallback(function() {
       markers.forEach(function(marker, i) {
         marker.setMap(null);
       });
+    }
+
+    function existsMaker(name) {
+      markers.forEach(function(marker, i) {
+        if (marker.label == name) {
+          return true;
+        }
+      });
+      return false;
     }
 
     function buildInfoWindow(hotelInfo) {
