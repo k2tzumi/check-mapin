@@ -43,7 +43,7 @@ google.setOnLoadCallback(function() {
     var map = new google.maps.Map($("#map-canvas").get(0), options);
     var bounds;
     var markers = new google.maps.MVCArray();
-    var infoWindows = new google.maps.MVCArray();
+    var windows = new google.maps.MVCArray();
 
     // slider作成
     createDateRangeSlider();
