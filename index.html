@@ -41,7 +41,8 @@ google.setOnLoadCallback(function() {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map($("#map-canvas").get(0), options);
-    var bounds = new google.maps.LatLngBounds();
+    var bounds;
+    var markers = new google.maps.MVCArray();
 
     // slider作成
     createDateRangeSlider();
@@ -58,6 +59,11 @@ google.setOnLoadCallback(function() {
       var max_serial = getExcelDateSerial(max);
 
       query.setQuery('SELECT B, E WHERE (G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')');
+
+      // 表示領域リセット
+      bounds = new google.maps.LatLngBounds();
+      // マーカー削除
+      removeMaker();
 
       query.send(handleSelectResponse);
     }
@@ -87,6 +93,8 @@ google.setOnLoadCallback(function() {
         map: map
       });
 
+      markers.push(marker);
+
       // click event
       google.maps.event.addListener(marker,
         'click',
@@ -113,6 +121,12 @@ google.setOnLoadCallback(function() {
 
       // zoom 調整 
       if　(i === 0) map.setZoom(18);
+    }
+
+    function removeMaker() {
+      markers.forEach(function(marker, i) {
+        marker.setMap(null);
+      });
     }
 
     function buildInfoWindow(hotelInfo) {
