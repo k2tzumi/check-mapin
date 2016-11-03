@@ -15,7 +15,6 @@ p {line-height: 180%;}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/css/iThing.min.css" integrity="sha256-xPnIpkGaJddz0uHOJ2Uvd/fs5GmpCy9N9imz0EZyB7Y=" crossorigin="anonymous" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-3.0.0.js"></script>
-<script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyCkk2rNYX35JKRC12ceqz2tKB9UKcWa8TE"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSliderMouseTouch.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSliderDraggable.min.js"></script>
@@ -26,6 +25,7 @@ p {line-height: 180%;}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQDateRangeSlider.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQDateRangeSliderHandle.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRuler.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyCkk2rNYX35JKRC12ceqz2tKB9UKcWa8TE"></script>
 <script type="text/javascript">
 // <![CDATA[
 google.load('visualization', '1', {packages: ['corechart']});
@@ -260,11 +260,9 @@ google.setOnLoadCallback(function() {
           next: function(value) {
             var next = new Date(value);
             return new Date(next.setMonth(value.getMonth() + 1));
-            // return new Date(next.setYear(value.getYear() + 1));
           },
           label: function(value) {
             return months[value.getMonth()];
-            // return value.getFullYear();
           },
           format: function(tickContainer, tickStart, tickEnd) {
             tickContainer.addClass("myCustomClass");
