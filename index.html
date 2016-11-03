@@ -258,7 +258,7 @@ google.setOnLoadCallback(function() {
           //　Primary scale
           {
             first: function(value) { return value; },
-            end: function(value) {return value; },
+            end: function(value) { return value; },
             next: function(value) {
               var next = new Date(value);
               return new Date(next.getFullYear() + 1, 0, 1);
@@ -277,8 +277,7 @@ google.setOnLoadCallback(function() {
             next: function(value) {
               var next = new Date(value);
               next = new Date(next.setMonth(value.getMonth() + 3));
-              next.setDay(1);
-              return next;
+              return new Date(next.getFullYear(), next.getMonth(), 1);
             },
             label: function(){ return null; }
           }
