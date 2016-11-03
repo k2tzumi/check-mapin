@@ -46,7 +46,8 @@ google.setOnLoadCallback(function() {
 
     var query = new google.visualization.Query('//spreadsheets.google.com/tq?key=' + key + '&pub=1');
 
-    query.setQuery("SELECT B, E WHERE F <= date '1/1/2011' AND F >= date '31/12/2011'");
+    // query.setQuery("SELECT B, E WHERE F <= date '1/1/2011' AND F >= date '31/12/2011'");
+    query.setQuery("SELECT B, E WHERE A >=  1 AND A <= 50");
     query.send(handleSelectResponse);
 
     // slider作成
