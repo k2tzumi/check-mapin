@@ -15,17 +15,18 @@ p {line-height: 180%;}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/css/iThing.min.css" integrity="sha256-xPnIpkGaJddz0uHOJ2Uvd/fs5GmpCy9N9imz0EZyB7Y=" crossorigin="anonymous" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-migrate-3.0.0.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyCkk2rNYX35JKRC12ceqz2tKB9UKcWa8TE"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSliderMouseTouch.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSliderDraggable.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSliderBar.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSliderHandle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSliderLabel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRangeSlider.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQDateRangeSliderHandle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQDateRangeSlider.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQDateRangeSliderHandle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/jQRuler.min.js"></script>
-<script src="https://www.google.com/jsapi?key=AIzaSyCkk2rNYX35JKRC12ceqz2tKB9UKcWa8TE"></script>
 <script type="text/javascript">
 // <![CDATA[
 google.load('visualization', '1', {packages: ['corechart']});
@@ -46,7 +47,6 @@ google.setOnLoadCallback(function() {
     var query = new google.visualization.Query('//spreadsheets.google.com/tq?key=' + key + '&pub=1');
 
     // query.setQuery("SELECT B, C WHERE A >= 10 AND A <= 110 LIMIT 50");
-    query.setQuery("SELECT B, C WHERE B <= '2006-06-19' AND B >= '2011-03-29'");
     //query.setQuery("SELECT B, C");
     query.send(handleSelectResponse);
 
