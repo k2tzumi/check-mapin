@@ -46,8 +46,8 @@ google.setOnLoadCallback(function() {
 
     var query = new google.visualization.Query('//spreadsheets.google.com/tq?key=' + key + '&pub=1');
 
-    // query.setQuery("SELECT B, E WHERE F <= date '1/1/2011' AND F >= date '31/12/2011'");
-    query.setQuery("SELECT B, E WHERE A >=  1 AND A <= 50");
+    query.setQuery("SELECT B, E WHERE F <= date '1/1/2012' AND F >= date '12/31/2012'");
+    // query.setQuery("SELECT B, E WHERE A >=  1 AND A <= 50");
     query.send(handleSelectResponse);
 
     // slider作成
@@ -245,7 +245,7 @@ google.setOnLoadCallback(function() {
       var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
       $("#slider").dateRangeSlider({
         bounds: { min: new Date(2011, 0, 1), max: new Date(2015, 11, 31, 12, 59, 59) },
-        defaultValues: {min: new Date(2015, 6, 1), max: new Date(2015, 11, 31)},
+        defaultValues: { min: new Date(2015, 6, 1), max: new Date(2015, 11, 31)},
         scales: [
           //　Primary scale
           {
@@ -273,12 +273,12 @@ google.setOnLoadCallback(function() {
             },
             label: function(value) {
               return months[value.getMonth()];
-            }, 
-            format: function(tickContainer, tickStart, tickEnd) {
-              tickContainer.addClass("myCustomClass");
             }
           }
         ]
+      });
+      $("#slider").bind("valuesChanged", function(e, data) {
+        console.log("Values just changed. min: " + data.values.min + " max: " + data.values.max);
       });
     }
   });
