@@ -264,14 +264,16 @@ google.setOnLoadCallback(function() {
           },
           // Secondary scale
           {
-            first: function(value){ return value; },
+            first: function(value) { return value; },
             stop: function(value){ return false; },
             next: function(value) {
               var next = new Date(value);
               next = new Date(next.setMonth(value.getMonth() + 3));
               return new Date(next.getFullYear(), next.getMonth(), 1);
             },
-            label: function(){ return null; }
+            label: function(value) {
+              return months[value.getMonth()];
+            }
           }
         ]
       });
