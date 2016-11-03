@@ -261,7 +261,7 @@ google.setOnLoadCallback(function() {
             end: function(value) {return value; },
             next: function(value) {
               var next = new Date(value);
-              return new Date(next.setFullYear(value.getFullYear() + 1));
+              return new Date(value.getFullYear() + 1, 0, 1));
             },
             label: function(value) {
               return value.getFullYear();
