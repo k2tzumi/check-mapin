@@ -93,9 +93,10 @@ google.setOnLoadCallback(function() {
       // マーカー表示
       var marker = new google.maps.Marker({
         position: position,
-        label: name,
+        // label: name,
         animation: google.maps.Animation.DROP,
-        map: map
+        map: map,
+        title: name
       });
 
       markers.push(marker);
@@ -136,10 +137,11 @@ google.setOnLoadCallback(function() {
 
     function existsMaker(name) {
       markers.forEach(function(marker, i) {
-        if (marker.label == name) {
+        if (marker.title == name) {
           return true;
         }
       });
+      
       return false;
     }
 
