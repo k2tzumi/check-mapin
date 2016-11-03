@@ -43,18 +43,24 @@ google.setOnLoadCallback(function() {
     var map = new google.maps.Map($("#map-canvas").get(0), options);
     var bounds = new google.maps.LatLngBounds();
 
-    var key = "1Ta8AbAaWFQ7UKa1rAHERuumGGZRTvAE-wu841mkDsYc";
-
-    var query = new google.visualization.Query('//spreadsheets.google.com/tq?key=' + key + '&pub=1');
-
-    // query.setQuery("SELECT B, E WHERE F <= date '1/1/2012' AND F >= date '12/31/2012'");
-    // query.setQuery('SELECT B, E WHERE F <= date "2012-1-1" AND F >= date "2012-12-31"');
-    query.setQuery('SELECT B, E WHERE G >= 40555 AND J <= 40885');
-    // query.setQuery("SELECT B, E WHERE A >=  1 AND A <= 50");
-    query.send(handleSelectResponse);
-
     // slider作成
     createDateRangeSlider();
+
+    // 初期スコープ
+    setScopeDate(defaultValues.min, defaultValues.max);
+
+    function setScopeDate(min, max) {
+      var key = "1Ta8AbAaWFQ7UKa1rAHERuumGGZRTvAE-wu841mkDsYc";
+
+      var query = new google.visualization.Query('//spreadsheets.google.com/tq?key=' + key + '&pub=1');
+
+      var min_serial = getExcelDateSerial(min);
+      var max_serial = getExcelDateSerial(max);
+
+      query.setQuery('SELECT B, E WHERE (G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')');
+
+      query.send(handleSelectResponse);
+    }
 
     function handleSelectResponse(response) {
       if (response.isError()) {
@@ -284,6 +290,8 @@ google.setOnLoadCallback(function() {
       });
       $("#slider").bind("valuesChanged", function(e, data) {
         console.log("Values just changed. min: " + getExcelDateSerial(data.values.min) + " max: " + getExcelDateSerial(data.values.max));
+        // 日付範囲変更　対象スコープ変更
+        setScopeDate(data.values.min, data.values.max);
       });
     }
   });
