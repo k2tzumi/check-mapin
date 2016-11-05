@@ -54,6 +54,7 @@ google.setOnLoadCallback(function() {
     var bounds;
     var markers = new google.maps.MVCArray();
     var windows = new google.maps.MVCArray();
+    var deferreds = [];
 
     // For dubug
     localStorage.clear();
@@ -77,6 +78,9 @@ google.setOnLoadCallback(function() {
       // output log query string
       // console.log(query.lk);
 
+      // カーソル変更
+      document.body.style.cursor = 'wait';
+
       query.send(handleSelectResponse);
     }
 
@@ -93,6 +97,7 @@ google.setOnLoadCallback(function() {
       bounds = new google.maps.LatLngBounds();
       // マーカー削除
       removeMaker();
+      deferreds = [];
 
   	  for (row = 0; row < data.getNumberOfRows(); row++) {
         var cols = {
@@ -110,6 +115,13 @@ google.setOnLoadCallback(function() {
         console.dir(cols);
         searchStabPin(cols.hotel_name, cols.address, row);
       }
+
+      // すべてのローディングが完了した。
+      $.when.apply($, deferreds).done(function(){
+        // カーソル変更
+        document.body.style.cursor = 'default';
+        window.alert('loading done.');
+      });
   	}
 
     function stabPin(name, position, i) {
@@ -177,7 +189,7 @@ google.setOnLoadCallback(function() {
         "https://maps.google.com/mapfiles/ms/icons/purple-dot.png",
       ];
 
-      var level = Math.floor(summary.stay_total / 10);
+      var level = Math.floor(summary.stay_total / 7);
 
       if (level > icons.size) {
         return nomal ? icons[icons.size - 1] : dot_icons[icons.size - 1];
@@ -258,6 +270,8 @@ google.setOnLoadCallback(function() {
       var geocoder = new google.maps.Geocoder();
 
       var deferred = $.Deferred();
+
+      deferreds.push(deferred);
 
       if (address == null || address == "") {
         deferred.reject(new Error("address is null"));
