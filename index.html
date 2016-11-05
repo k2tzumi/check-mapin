@@ -112,7 +112,7 @@ google.setOnLoadCallback(function() {
         animation: google.maps.Animation.DROP,
         map: map,
         title: name,
-        icon: getIcon(name),
+        icon: getIcon(name, (i < 9)),
         shadow: "http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
       });
 
@@ -148,10 +148,17 @@ google.setOnLoadCallback(function() {
       if　(i === 0) map.setZoom(18);
     }
 
-    function getIcon(name) {
+    function getIcon(name, nomal) {
       var summary = JSON.parse(sessionStorage.getItem(name));
 
       var icons = [
+        "http://maps.google.com/mapfiles/ms/icons/blue.png",
+        "http://maps.google.com/mapfiles/ms/icons/green.png",
+        "http://maps.google.com/mapfiles/ms/icons/yellow.png",
+        "http://maps.google.com/mapfiles/ms/icons/red.png",
+        "http://maps.google.com/mapfiles/ms/icons/purple.png",
+      ];
+      var dot_icons = [
         "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
         "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
         "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
@@ -161,10 +168,10 @@ google.setOnLoadCallback(function() {
 
       var level = Math.floor(summary.stay_total / 10);
 
-      if (level >  icons.size) {
-        return icons[icons.size - 1];
+      if (level > icons.size) {
+        return nomal ? icons[icons.size - 1] : dot_icons[icons.size - 1];
       } else {
-        return icons[level];
+        return nomal ? icons[level] : dot_icons[level];
       }
     }
 
