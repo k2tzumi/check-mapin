@@ -50,7 +50,6 @@ google.setOnLoadCallback(function() {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map($("#map-canvas").get(0), options);
-    // map.setZoom(18);
     var bounds;
     var markers = new google.maps.MVCArray();
     var windows = new google.maps.MVCArray();
@@ -156,6 +155,7 @@ google.setOnLoadCallback(function() {
       // Marker fitting
       bounds.extend(position);
       map.fitBounds(bounds);
+      if (i == 0) map.setZoom(18);
     }
 
     function getIcon(name, nomal) {
@@ -295,7 +295,7 @@ google.setOnLoadCallback(function() {
               deferred.reject(new Error(status));
             }
           });
-        }).promise();
+        });
       }).promise();
     }
 
