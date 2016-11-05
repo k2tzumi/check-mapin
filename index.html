@@ -60,7 +60,7 @@ google.setOnLoadCallback(function() {
       var max_serial = getExcelDateSerial(max);
 
       // query.setQuery('SELECT B, E, L, NAX(M), SUM(K) WHERE ((G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')) GROUP BY D ORDER BY MAX(M) DESC');
-      query.setQuery('SELECT B, E, N, MAX(O), SUM(M) WHERE ((G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')) GROUP BY B ORDER BY MAX(O) DESC');
+      query.setQuery('SELECT B, E, MAX(N), MAX(O), SUM(M), COUNT(B) WHERE ((G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')) GROUP BY B, E ORDER BY MAX(O) DESC');
 
       console.dir(query.lk);
 
@@ -82,9 +82,10 @@ google.setOnLoadCallback(function() {
         var cols = {
           hotel_name: data.getValue(row, 0),
           address: data.getValue(row, 1),
-          check_count: data.getValue(row, 2),
+          check_total: data.getValue(row, 2),
           stay_total: data.getValue(row, 3),
           stay_summary: data.getValue(row, 4),
+          check_summary: data.getValue(row, 5),
         }
 
         sleep(3000).done(function () {
@@ -104,7 +105,7 @@ google.setOnLoadCallback(function() {
       // マーカー表示
       var marker = new google.maps.Marker({
         position: position,
-        // label: name,
+        label: (i <= 15) ? i : null,
         animation: google.maps.Animation.DROP,
         map: map,
         title: name
