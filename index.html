@@ -59,9 +59,9 @@ google.setOnLoadCallback(function() {
       var min_serial = getExcelDateSerial(min);
       var max_serial = getExcelDateSerial(max);
 
-      query.setQuery('SELECT B, E, L, M, SUM(K) WHERE (G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')');
+      query.setQuery('SELECT B, E, L, MAX(M), SUM(K) WHERE (G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ') GROUP BY D ORDER BY MAX(M) DESC');
 
-      console.dir(query);
+      console.dir(query.lk);
 
       // 表示領域リセット
       bounds = new google.maps.LatLngBounds();
