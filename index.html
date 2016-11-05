@@ -296,7 +296,7 @@ google.setOnLoadCallback(function() {
             var position = new google.maps.LatLng(location.lat, location.lng);
 
             localStorage.setItem(key, JSON.stringify(position));
-            console.log("geocode " + position;
+            console.log("geocode " + position);
             deferred.resolve(position);
           } else {
             console.warn("status(" + status + "):" + results);
