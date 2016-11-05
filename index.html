@@ -64,7 +64,8 @@ google.setOnLoadCallback(function() {
       // query.setQuery('SELECT B, E, L, NAX(M), SUM(K) WHERE ((G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')) GROUP BY D ORDER BY MAX(M) DESC');
       query.setQuery('SELECT B, E, MAX(N), MAX(O), SUM(M), COUNT(F) WHERE ((G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')) GROUP BY B, E ORDER BY MAX(O) DESC');
 
-      console.dir(query.lk);
+      // output log query string
+      // console.log(query.lk);
 
       // 表示領域リセット
       bounds = new google.maps.LatLngBounds();
@@ -107,10 +108,12 @@ google.setOnLoadCallback(function() {
       // マーカー表示
       var marker = new google.maps.Marker({
         position: position,
-        label: (i <= 15) ? String(i + 1) : null,
+        label: (i < 9) ? String(i + 1) : null,
         animation: google.maps.Animation.DROP,
         map: map,
-        title: name
+        title: name,
+        icon: getIcon(name);
+        shadow: "http://chart.apis.google.com/chart?chst=d_map_pin_shadow"
       });
 
       markers.push(marker);
@@ -127,7 +130,7 @@ google.setOnLoadCallback(function() {
             // 楽天情報Windows
             buildInfoWindow(hotelInfo).open(map, marker);
           }, function(err) {
-            console.log(err);
+            console.warn(err);
             // ダミー情報Windows
             buildInfoWindow({
               'hotelName': name,
@@ -143,6 +146,26 @@ google.setOnLoadCallback(function() {
 
       // zoom 調整 
       if　(i === 0) map.setZoom(18);
+    }
+
+    function getIcon(name) {
+      var summary = JSON.parse(sessionStorage.getItem(name));
+
+      var icons = {
+        "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+        "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+        "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+        "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+        "http://maps.google.com/mapfiles/ms/icons/purple-dot.png",
+      }
+
+      var level = Math.floor(summary.stay_total / 10);
+
+      if (level >  icons.size) {
+        return icons[icons.size - 1];
+      } else {
+        return icons[level];
+      }
     }
 
     function removeMaker() {
