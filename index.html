@@ -35,6 +35,13 @@ var MD5=function(s){function L(k,d){return(k<<d)|(k>>>(32-d))}function K(G,k){va
 var defaultValues = { min: new Date(2015, 5, 1), max: new Date(2015, 11, 31)};
 var getExcelDateSerial=function(date){ var date_time =  25569.0 + ((date.getTime() - (date.getTimezoneOffset() * 60 * 1000)) / (1000 * 60 * 60 * 24)); return date_time.toString().substr(0,5); }
 var query_count = 0;
+$.extend({
+  wait: function(duration) {
+    var dfd = $.Deferred();
+    setTimeout(function(){ dfd.resolve(); }, duration);
+    return dfd;
+  }
+});
 
 google.setOnLoadCallback(function() {
   $(function(){
@@ -64,7 +71,6 @@ google.setOnLoadCallback(function() {
       var min_serial = getExcelDateSerial(min);
       var max_serial = getExcelDateSerial(max);
 
-      // query.setQuery('SELECT B, E, L, NAX(M), SUM(K) WHERE ((G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')) GROUP BY D ORDER BY MAX(M) DESC');
       query.setQuery('SELECT B, E, MAX(N), MAX(O), SUM(M), COUNT(F) WHERE ((G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')) GROUP BY B, E ORDER BY MAX(O) DESC');
 
       // output log query string
@@ -83,6 +89,7 @@ google.setOnLoadCallback(function() {
         alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
         return;
       }
+
       var data = response.getDataTable();
       // session remove
       sessionStorage.clear();
@@ -93,7 +100,7 @@ google.setOnLoadCallback(function() {
           check_total: data.getValue(row, 2),
           stay_total: data.getValue(row, 3),
           stay_summary: data.getValue(row, 4),
-          check_summary: data.getValue(row, 5),
+          check_summary: data.getValue(row, 5)
         }
 
         // object store
@@ -239,7 +246,7 @@ google.setOnLoadCallback(function() {
     // Pinを刺す 
     function searchStabPin(name, address, i) {
       convertGeoCode(address).then(function(result) {
-        var position = new google.maps.LatLng( result.lat , result.lng );
+        var position = new google.maps.LatLng(result.lat , result.lng);
         stabPin(name, position, i);
       }, function(err) {
         console.log(err);
@@ -264,28 +271,31 @@ google.setOnLoadCallback(function() {
 
         query_count += 1;
 
-        console.log("active query " + query_count);
+        var msec = 0;
 
-        while (query_count > 5) {
-          console.log("active query " + query_count + " waiting");
-          sleep(300).done(function () {
-            query_count -= 1;
-            console.log("query count down" + query_count);
-          });
+        if (query_count > 5) {
+          msec = query_count * 1000;
+          console.log("active query " + query_count + " waiting " + msec  + " msec");
+        } else {
+          console.log("active query " + query_count);
+          msec = 0;
         }
 
-        //住所から座標を取得する
-        geocoder.geocode({
-          'address': address,
-          'region': 'jp'
-        }, function(results, status) {
-          query_count -= 1;
-          if (status === google.maps.GeocoderStatus.OK) {
-            localStorage.setItem(key, JSON.stringify(results[0].geometry.location));
-            deferred.resolve(results[0]);
-          } else {
-            deferred.reject(new Error(status));
-          }
+        $.wait(msec).done(function() {
+          //住所から座標を取得する
+          geocoder.geocode({
+            'address': address,
+            'region': 'jp'
+          }, function(results, status) {
+            query_count -= 1;
+            if (status === google.maps.GeocoderStatus.OK) {
+              localStorage.setItem(key, JSON.stringify(results[0].geometry.location));
+              console.log("location return " + results[0].geometry.location);
+              deferred.resolve(results[0].geometry.location);
+            } else {
+              deferred.reject(new Error(status));
+            }
+          });
         });
       }).promise();
     }
