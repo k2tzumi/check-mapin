@@ -243,7 +243,8 @@ google.setOnLoadCallback(function() {
 
     // Pinを刺す 
     function searchStabPin(name, address, i) {
-      convertGeoCode(address).done(function(position) {
+      convertGeoCode(address).done(function(location) {
+        var position = new google.maps.LatLng(location.lat, location.lng);
         console.log("convert geocode " + position);
         stabPin(name, position, i);
       }, function(err) {
@@ -267,9 +268,7 @@ google.setOnLoadCallback(function() {
       var location = localStorage.getItem(key);
 
       if (location) {
-        var position = JSON.parse(location);
-
-        deferred.resolve(new google.maps.LatLng(position.lat, position.lng));
+        deferred.resolve(JSON.parse(location));
 
         return deferred.promise();
       }
@@ -295,15 +294,9 @@ google.setOnLoadCallback(function() {
           query_count -= 1;
           if (status === google.maps.GeocoderStatus.OK) {
             var location = results[0].geometry.location;
-            var position = new google.maps.LatLng(location.lat, location.lng);
 
-            console.log("original" + results[0].geometry.location);
-            console.log("original2jsonstring" + JSON.stringify(results[0].geometry.location));
-            console.log("original2position" + position);
-            console.log("position2jsonstring" + JSON.stringify(position));
-
-            localStorage.setItem(key, JSON.stringify(position));
-            deferred.resolve(position);
+            localStorage.setItem(key, JSON.stringify(location));
+            deferred.resolve(location);
           } else {
             console.warn("status(" + status + "):" + results);
             deferred.reject(new Error(status));
