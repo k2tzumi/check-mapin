@@ -245,7 +245,7 @@ google.setOnLoadCallback(function() {
     function searchStabPin(name, address, i) {
       convertGeoCode(address).done(function(result) {
         var position = new google.maps.LatLng(result.lat , result.lng);
-        console.log("position " + position);
+        console.log("result " + result);
         stabPin(name, position, i);
       }, function(err) {
         console.warn(err);
