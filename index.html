@@ -268,7 +268,7 @@ google.setOnLoadCallback(function() {
       var location = localStorage.getItem(key);
 
       if (location) {
-        rdeferred.resolve(JSON.parse(location));
+        deferred.resolve(JSON.parse(location));
 
         return deferred.promise();
       }
