@@ -35,6 +35,7 @@ var MD5=function(s){function L(k,d){return(k<<d)|(k>>>(32-d))}function K(G,k){va
 var defaultValues = { min: new Date(2015, 5, 1), max: new Date(2015, 11, 31)};
 var getExcelDateSerial=function(date){ var date_time =  25569.0 + ((date.getTime() - (date.getTimezoneOffset() * 60 * 1000)) / (1000 * 60 * 60 * 24)); return date_time.toString().substr(0,5); }
 var query_count = 0;
+var delay = 100;
 $.extend({
   wait: function(duration) {
     var dfd = $.Deferred();
@@ -277,12 +278,12 @@ google.setOnLoadCallback(function() {
 
       var msec = 0;
 
-      if (query_count > 5) {
-        msec = query_count * 300;
+      if (query_count > 3) {
+        msec = query_count * 500 + delay;
         console.log("active query " + query_count + " waiting " + msec  + " msec");
       } else {
         console.log("active query " + query_count);
-        msec = 1;
+        msec = delay;
       }
 
       $.wait(msec).done(function() {
@@ -298,6 +299,9 @@ google.setOnLoadCallback(function() {
             localStorage.setItem(key, JSON.stringify(location));
             deferred.resolve(JSON.parse(localStorage.getItem(key)));
           } else {
+            if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+              delay += 800;
+            }
             console.warn("status(" + status + ")");
             deferred.reject(new Error(status));
           }
