@@ -76,11 +76,6 @@ google.setOnLoadCallback(function() {
       // output log query string
       // console.log(query.lk);
 
-      // 表示領域リセット
-      bounds = new google.maps.LatLngBounds();
-      // マーカー削除
-      removeMaker();
-
       query.send(handleSelectResponse);
     }
 
@@ -93,6 +88,11 @@ google.setOnLoadCallback(function() {
       var data = response.getDataTable();
       // session remove
       sessionStorage.clear();
+      // 表示領域リセット
+      bounds = new google.maps.LatLngBounds();
+      // マーカー削除
+      removeMaker();
+
   	  for (row = 0; row < data.getNumberOfRows(); row++) {
         var cols = {
           hotel_name: data.getValue(row, 0),
