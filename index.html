@@ -61,8 +61,8 @@ google.setOnLoadCallback(function() {
 
       query.setQuery('SELECT B, E, L, M, SUM(K) WHERE (G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')');
 
-      console.dir(query.getQuery());
-      
+      console.dir(query);
+
       // 表示領域リセット
       bounds = new google.maps.LatLngBounds();
       // マーカー削除
