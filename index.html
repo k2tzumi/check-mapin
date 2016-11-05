@@ -296,7 +296,7 @@ google.setOnLoadCallback(function() {
             var location = results[0].geometry.location;
 
             localStorage.setItem(key, JSON.stringify(location));
-            deferred.resolve(location);
+            deferred.resolve(JSON.parse(localStorage.getItem(key)));
           } else {
             console.warn("status(" + status + "):" + results);
             deferred.reject(new Error(status));
