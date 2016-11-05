@@ -245,7 +245,7 @@ google.setOnLoadCallback(function() {
     function searchStabPin(name, address, i) {
       convertGeoCode(address).done(function(location) {
         var position = new google.maps.LatLng(location.lat, location.lng);
-        console.log("convert geocode " + position);
+        // console.log("convert geocode " + position);
         stabPin(name, position, i);
       }, function(err) {
         console.warn(err);
@@ -285,7 +285,7 @@ google.setOnLoadCallback(function() {
         msec = 1;
       }
 
-      // $.wait(msec).done(function() {
+      $.wait(msec).done(function() {
         //住所から座標を取得する
         geocoder.geocode({
           'address': address,
@@ -298,11 +298,11 @@ google.setOnLoadCallback(function() {
             localStorage.setItem(key, JSON.stringify(location));
             deferred.resolve(JSON.parse(localStorage.getItem(key)));
           } else {
-            console.warn("status(" + status + "):" + results);
+            console.warn("status(" + status + ")");
             deferred.reject(new Error(status));
           }
         });
-      // });
+      });
 
       return deferred.promise();
     }
