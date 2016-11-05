@@ -81,6 +81,8 @@ google.setOnLoadCallback(function() {
         return;
       }
       var data = response.getDataTable();
+      // session remove
+      sessionStorage.clear();
   	  for (row = 0; row < data.getNumberOfRows(); row++) {
         var cols = {
           hotel_name: data.getValue(row, 0),
@@ -152,18 +154,18 @@ google.setOnLoadCallback(function() {
       var summary = JSON.parse(sessionStorage.getItem(name));
 
       var icons = [
-        "http://maps.google.com/mapfiles/ms/icons/blue.png",
-        "http://maps.google.com/mapfiles/ms/icons/green.png",
-        "http://maps.google.com/mapfiles/ms/icons/yellow.png",
-        "http://maps.google.com/mapfiles/ms/icons/red.png",
-        "http://maps.google.com/mapfiles/ms/icons/purple.png",
+        "https://maps.google.com/mapfiles/ms/icons/blue.png",
+        "https://maps.google.com/mapfiles/ms/icons/green.png",
+        "https://maps.google.com/mapfiles/ms/icons/yellow.png",
+        "https://maps.google.com/mapfiles/ms/icons/red.png",
+        "https://maps.google.com/mapfiles/ms/icons/purple.png",
       ];
       var dot_icons = [
-        "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-        "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
-        "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
-        "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-        "http://maps.google.com/mapfiles/ms/icons/purple-dot.png",
+        "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+        "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
+        "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+        "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
+        "https://maps.google.com/mapfiles/ms/icons/purple-dot.png",
       ];
 
       var level = Math.floor(summary.stay_total / 10);
