@@ -293,9 +293,7 @@ google.setOnLoadCallback(function() {
         }, function(results, status) {
           query_count -= 1;
           if (status === google.maps.GeocoderStatus.OK) {
-            var location = results[0].geometry.location;
-
-            localStorage.setItem(key, results[0].geometry.location);
+            localStorage.setItem(key, JSON.stringify(results[0].geometry.location));
             deferred.resolve(results[0].geometry.location);
           } else {
             console.warn("status(" + status + "):" + results);
