@@ -88,11 +88,11 @@ google.setOnLoadCallback(function() {
           check_summary: data.getValue(row, 5),
         }
 
-        sleep(3000).done(function () {
-          console.dir(cols);
-          searchStabPin(cols.hotel_name, cols.hotel_name, row);
-        });
-        // searchStabPin(cols.hotel_name, cols.address, row);
+        console.dir(cols);
+        // sleep(300).done(function () {
+        //   searchStabPin(cols.hotel_name, cols.hotel_name, row);
+        // });
+        searchStabPin(cols.hotel_name, cols.address, row);
       }
   	}
 
