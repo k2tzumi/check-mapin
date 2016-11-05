@@ -290,10 +290,10 @@ google.setOnLoadCallback(function() {
           query_count -= 1;
           if (status === google.maps.GeocoderStatus.OK) {
             localStorage.setItem(key, JSON.stringify(results[0].geometry.location));
-            deferred.resolve(results[0].geometry.location);
+            return deferred.resolve(results[0].geometry.location);
           } else {
             console.warn("status(" + status + "):" + results);
-            deferred.reject(new Error(status));
+            return deferred.reject(new Error(status));
           }
         });
       // });
