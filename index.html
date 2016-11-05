@@ -255,48 +255,50 @@ google.setOnLoadCallback(function() {
     function convertGeoCode(address) {
       var geocoder = new google.maps.Geocoder();
 
-      return $.Deferred(function(deferred) {
-        if (address == null || address == "") {
-          deferred.reject(new Error("address is null"));
-        }
+      var deferred = $.Deferred();
 
-        var key = JSON.stringify({ 'address': MD5(address) });
-        var location = localStorage.getItem(key);
+      if (address == null || address == "") {
+        return deferred.reject(new Error("address is null"));
+      }
 
-        if (location) {
-          return deferred.resolve(JSON.parse(location));
-        }
+      var key = JSON.stringify({ 'address': MD5(address) });
+      var location = localStorage.getItem(key);
 
-        query_count += 1;
+      if (location) {
+        return deferred.resolve(JSON.parse(location));
+      }
 
-        var msec = 0;
+      query_count += 1;
 
-        if (query_count > 5) {
-          msec = query_count * 300;
-          console.log("active query " + query_count + " waiting " + msec  + " msec");
-        } else {
-          console.log("active query " + query_count);
-          msec = 1;
-        }
+      var msec = 0;
 
-        // $.wait(msec).done(function() {
-          //住所から座標を取得する
-          geocoder.geocode({
-            'address': address,
-            'region': 'jp'
-          }, function(results, status) {
-            query_count -= 1;
-            if (status === google.maps.GeocoderStatus.OK) {
-              localStorage.setItem(key, JSON.stringify(results[0].geometry.location));
-              console.log("location return " + results[0].geometry.location);
-              deferred.resolve(results[0].geometry.location);
-            } else {
-              console.warn("status(" + status + "):" + results);
-              deferred.reject(new Error(status));
-            }
-          });
-        // });
-      });
+      if (query_count > 5) {
+        msec = query_count * 300;
+        console.log("active query " + query_count + " waiting " + msec  + " msec");
+      } else {
+        console.log("active query " + query_count);
+        msec = 1;
+      }
+
+      // $.wait(msec).done(function() {
+        //住所から座標を取得する
+        geocoder.geocode({
+          'address': address,
+          'region': 'jp'
+        }, function(results, status) {
+          query_count -= 1;
+          if (status === google.maps.GeocoderStatus.OK) {
+            localStorage.setItem(key, JSON.stringify(results[0].geometry.location));
+            console.log("location return " + results[0].geometry.location);
+            deferred.resolve(results[0].geometry.location);
+          } else {
+            console.warn("status(" + status + "):" + results);
+            deferred.reject(new Error(status));
+          }
+        });
+      // });
+      
+      return deferred.promise();
     }
 
     // 現在位置を取得
