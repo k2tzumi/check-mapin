@@ -80,6 +80,7 @@ google.setOnLoadCallback(function() {
       bounds = new google.maps.LatLngBounds();
       // マーカー削除
       removeMaker();
+      map.setZoom(18);
 
       query.send(handleSelectResponse);
     }
@@ -155,9 +156,6 @@ google.setOnLoadCallback(function() {
       // Marker fitting
       bounds.extend(position);
       map.fitBounds(bounds);
-
-      // zoom 調整 
-      if　(i === 0) map.setZoom(18);
     }
 
     function getIcon(name, nomal) {
