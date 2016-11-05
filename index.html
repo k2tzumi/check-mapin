@@ -294,9 +294,9 @@ google.setOnLoadCallback(function() {
               console.warn("status(" + status + "):" + results);
               deferred.reject(new Error(status));
             }
-          });
+          }).promise();
         });
-      }).promise();
+      });
     }
 
     // 現在位置を取得
