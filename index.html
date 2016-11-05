@@ -269,7 +269,7 @@ google.setOnLoadCallback(function() {
 
       if (location) {
         rdeferred.resolve(JSON.parse(location));
-        
+
         return deferred.promise();
       }
 
@@ -294,6 +294,7 @@ google.setOnLoadCallback(function() {
           query_count -= 1;
           if (status === google.maps.GeocoderStatus.OK) {
             localStorage.setItem(key, JSON.stringify(results[0].geometry.location));
+            console.log("geocode " + results[0].geometry.location);
             deferred.resolve(results[0].geometry.location);
           } else {
             console.warn("status(" + status + "):" + results);
