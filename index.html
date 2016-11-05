@@ -60,7 +60,7 @@ google.setOnLoadCallback(function() {
       var max_serial = getExcelDateSerial(max);
 
       // query.setQuery('SELECT B, E, L, NAX(M), SUM(K) WHERE ((G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')) GROUP BY D ORDER BY MAX(M) DESC');
-      query.setQuery('SELECT B, E, L, M, K WHERE ((G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + '))');
+      query.setQuery('SELECT B, E, N, O, SUM(M) WHERE ((G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')) GROUP BY D ORDER BY MAX(O) DESC');
 
       console.dir(query.lk);
 
@@ -87,9 +87,8 @@ google.setOnLoadCallback(function() {
           stay_summary: data.getValue(row, 4),
         }
 
-        console.dir(cols);
-
         sleep(3000).done(function () {
+          console.dir(cols);
           searchStabPin(cols.hotel_name, cols.hotel_name, row);
         });
         // searchStabPin(cols.hotel_name, cols.address, row);
