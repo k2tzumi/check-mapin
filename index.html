@@ -59,7 +59,7 @@ google.setOnLoadCallback(function() {
       var min_serial = getExcelDateSerial(min);
       var max_serial = getExcelDateSerial(max);
 
-      query.setQuery('SELECT B, E WHERE (G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')');
+      query.setQuery('SELECT B, E, L, M, SUM(K) WHERE (G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ') ORDER BY M DESC');
 
       // 表示領域リセット
       bounds = new google.maps.LatLngBounds();
@@ -76,12 +76,19 @@ google.setOnLoadCallback(function() {
       }
       var data = response.getDataTable();
   	  for (row = 0; row < data.getNumberOfRows(); row++) {
-        console.dir(data.getValue(row, 0));
-        console.dir(data.getValue(row, 1));
+        var row = {
+          hotel_name: data.getValue(row, 0),
+          address: data.getValue(row, 1),
+          check_count: data.getValue(row, 2),
+          stay_total: data.getValue(row, 3),
+          stay_summary: data.getValue(row, 4),
+        }
+
+        console.dir(row);
         // sleep(300).done(function () {
         //   searchStabPin(data.getValue(row, 0), data.getValue(row, 1), row);
         // });
-        searchStabPin(data.getValue(row, 0), data.getValue(row, 1), row);
+        searchStabPin(row.hotel_name, row.address, row);
       }
   	}
 
@@ -343,9 +350,9 @@ google.setOnLoadCallback(function() {
 </script>
 </head>
 <body>
+<div id="slider"></div>
 <div class="map-embed">
 <div id="map-canvas"></div>
 </div>
-<div id="slider"></div>
 </body>
 </html>
