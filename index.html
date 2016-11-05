@@ -90,8 +90,11 @@ google.setOnLoadCallback(function() {
           check_summary: data.getValue(row, 5),
         }
 
+        // object store
+        sessionStorage.setItem(cols.hotel_name, JSON.stringify(cols));
+
         console.dir(cols);
-        searchStabPin(cols.hotel_name, cols.hotel_name, row);
+        searchStabPin(cols.hotel_name, cols.address, row);
       }
   	}
 
@@ -169,8 +172,10 @@ google.setOnLoadCallback(function() {
 
       if (hotelInfo.hotelInformationUrl) {
         content = '<a href="' + hotelInfo.hotelInformationUrl + '" target="_blank">' + hotelInfo.hotelName + '</a><br><img src="' + abridgeScheme(hotelInfo.hotelThumbnailUrl) +'">';
+        content += buildSummaryContents(hotelInfo.orinal_name);
       } else {
         content = hotelInfo.hotelName;
+        content += buildSummaryContents(hotelInfo.hotelName);
       }
 
       var position = new google.maps.LatLng(hotelInfo.latitude , hotelInfo.longitude)
@@ -184,6 +189,16 @@ google.setOnLoadCallback(function() {
       windows.push(window);
 
       return window;
+    }
+
+    function buildSummaryContents(name) {
+      var summary = JSON.parse(sessionStorage.getItem(name));
+      var content = "";
+
+      content += "check-in:" + summary.check_summary + "(" + summary.check_total + ")<BR>"
+      content += "stay:" + summary.stay_summary + "(" + summary.stay_total + ")"
+
+      return content;
     }
 
     // Pinを刺す 
@@ -217,8 +232,10 @@ google.setOnLoadCallback(function() {
         console.log("active query " + query_count);
 
         while (query_count > 5) {
-          sleep(300).then(function () {
-            console.log("active query " + query_count + " waiting");
+          console.log("active query " + query_count + " waiting");
+          sleep(300).done(function () {
+            query_count -= 1;
+            console.log("query count down" + query_count);
           });
         }
 
@@ -227,12 +244,11 @@ google.setOnLoadCallback(function() {
           'address': address,
           'region': 'jp'
         }, function(results, status) {
+          query_count -= 1;
           if (status === google.maps.GeocoderStatus.OK) {
             localStorage.setItem(key, JSON.stringify(results[0].geometry.location));
-            query_count -= 1;
             deferred.resolve(results[0]);
           } else {
-            query_count -= 1;
             deferred.reject(new Error(status));
           }
         });
@@ -292,8 +308,10 @@ google.setOnLoadCallback(function() {
         jsonp: 'callback'
       }).done(function(data) {
          if (data.hotels != null) {
-          localStorage.setItem(key, JSON.stringify(data.hotels[0][0].hotelBasicInfo));
-          deferred.resolve(data.hotels[0][0].hotelBasicInfo);
+          var hotelBasicInfo = data.hotels[0][0].hotelBasicInfo;
+          hotelBasicInfo.orinal_name = name;
+          localStorage.setItem(key, JSON.stringify(hotelBasicInfo));
+          deferred.resolve(hotelBasicInfo);
         } else {
           deferred.reject(data.error + ' / ' + data.error_description);
         }
