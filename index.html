@@ -39,7 +39,7 @@ $.extend({
   wait: function(duration) {
     var dfd = $.Deferred();
     setTimeout(function(){ dfd.resolve(); }, duration);
-    return dfd;
+    return dfd.promise();
   }
 });
 
@@ -295,7 +295,7 @@ google.setOnLoadCallback(function() {
               deferred.reject(new Error(status));
             }
           });
-        });
+        }).promise();
       }).promise();
     }
 
