@@ -78,6 +78,8 @@ google.setOnLoadCallback(function() {
       // output log query string
       // console.log(query.lk);
 
+      // disable slider
+      $("#slider").dateRangeSlider("disable");
       // カーソル変更
       document.body.style.cursor = 'wait';
 
@@ -120,6 +122,8 @@ google.setOnLoadCallback(function() {
       $.when.apply($, deferreds).done(function(){
         // カーソル変更
         document.body.style.cursor = 'default';
+        // enable slider
+        $("#slider").dateRangeSlider("enable");
         window.alert('loading done.');
       });
   	}
