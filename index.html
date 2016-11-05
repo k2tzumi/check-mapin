@@ -259,14 +259,18 @@ google.setOnLoadCallback(function() {
       var deferred = $.Deferred();
 
       if (address == null || address == "") {
-        return deferred.reject(new Error("address is null"));
+        deferred.reject(new Error("address is null"));
+
+        return deferred.promise();
       }
 
       var key = JSON.stringify({ 'address': MD5(address) });
       var location = localStorage.getItem(key);
 
       if (location) {
-        return deferred.resolve(JSON.parse(location));
+        rdeferred.resolve(JSON.parse(location));
+        
+        return deferred.promise();
       }
 
       query_count += 1;
@@ -290,10 +294,10 @@ google.setOnLoadCallback(function() {
           query_count -= 1;
           if (status === google.maps.GeocoderStatus.OK) {
             localStorage.setItem(key, JSON.stringify(results[0].geometry.location));
-            return deferred.resolve(results[0].geometry.location);
+            deferred.resolve(results[0].geometry.location);
           } else {
             console.warn("status(" + status + "):" + results);
-            return deferred.reject(new Error(status));
+            deferred.reject(new Error(status));
           }
         });
       // });
