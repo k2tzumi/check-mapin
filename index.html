@@ -50,6 +50,7 @@ google.setOnLoadCallback(function() {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map($("#map-canvas").get(0), options);
+    // map.setZoom(18);
     var bounds;
     var markers = new google.maps.MVCArray();
     var windows = new google.maps.MVCArray();
@@ -80,7 +81,6 @@ google.setOnLoadCallback(function() {
       bounds = new google.maps.LatLngBounds();
       // マーカー削除
       removeMaker();
-      map.setZoom(18);
 
       query.send(handleSelectResponse);
     }
@@ -247,7 +247,7 @@ google.setOnLoadCallback(function() {
         var position = new google.maps.LatLng(result.lat , result.lng);
         stabPin(name, position, i);
       }, function(err) {
-        console.log(err);
+        console.warn(err);
       });
     }
 
@@ -272,11 +272,11 @@ google.setOnLoadCallback(function() {
         var msec = 0;
 
         if (query_count > 5) {
-          msec = query_count * 1000;
+          msec = query_count * 300;
           console.log("active query " + query_count + " waiting " + msec  + " msec");
         } else {
           console.log("active query " + query_count);
-          msec = 0;
+          msec = 1;
         }
 
         $.wait(msec).done(function() {
@@ -291,6 +291,7 @@ google.setOnLoadCallback(function() {
               console.log("location return " + results[0].geometry.location);
               deferred.resolve(results[0].geometry.location);
             } else {
+              console.warn("status(" + status + "):" + results);
               deferred.reject(new Error(status));
             }
           });
