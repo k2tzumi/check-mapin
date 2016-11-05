@@ -107,7 +107,7 @@ google.setOnLoadCallback(function() {
       // マーカー表示
       var marker = new google.maps.Marker({
         position: position,
-        label: (i <= 15) ? String(i) : null,
+        label: (i <= 15) ? String(i + 1) : null,
         animation: google.maps.Animation.DROP,
         map: map,
         title: name
@@ -171,7 +171,7 @@ google.setOnLoadCallback(function() {
       var content;
 
       if (hotelInfo.hotelInformationUrl) {
-        content = '<a href="' + hotelInfo.hotelInformationUrl + '" target="_blank">' + hotelInfo.hotelName + '</a><br><img src="' + abridgeScheme(hotelInfo.hotelThumbnailUrl) +'">';
+        content = '<a href="' + hotelInfo.hotelInformationUrl + '" target="_blank">' + hotelInfo.hotelName + '</a><br><img src="' + abridgeScheme(hotelInfo.hotelThumbnailUrl) +'" align="left">';
         content += buildSummaryContents(hotelInfo.orinal_name);
       } else {
         content = hotelInfo.hotelName;
@@ -195,8 +195,8 @@ google.setOnLoadCallback(function() {
       var summary = JSON.parse(sessionStorage.getItem(name));
       var content = "";
 
-      content += "check-in:" + summary.check_summary + "(" + summary.check_total + ")<BR>"
-      content += "stay:" + summary.stay_summary + "(" + summary.stay_total + ")"
+      content += "<div>check-in:" + summary.check_summary + "(" + summary.check_total + ")</div> "
+      content += "<div>stay:" + summary.stay_summary + "(" + summary.stay_total + ")</div>"
 
       return content;
     }
