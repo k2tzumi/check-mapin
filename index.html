@@ -151,13 +151,13 @@ google.setOnLoadCallback(function() {
     function getIcon(name) {
       var summary = JSON.parse(sessionStorage.getItem(name));
 
-      var icons = {
+      var icons = [
         "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
         "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
         "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
         "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
         "http://maps.google.com/mapfiles/ms/icons/purple-dot.png",
-      };
+      ];
 
       var level = Math.floor(summary.stay_total / 10);
 
