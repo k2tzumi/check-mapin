@@ -59,7 +59,7 @@ google.setOnLoadCallback(function() {
       var min_serial = getExcelDateSerial(min);
       var max_serial = getExcelDateSerial(max);
 
-      query.setQuery('SELECT B, E, L, MAX(M), SUM(K) WHERE (G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ') GROUP BY D ORDER BY MAX(M) DESC');
+      query.setQuery('SELECT B, E, L, NAX(M), SUM(K) WHERE ((G >= ' + min_serial + ' AND G <= ' +　max_serial + ') OR (J >= ' + min_serial + ' AND J <= ' +　max_serial + ')) GROUP BY D ORDER BY MAX(M) DESC');
 
       console.dir(query.lk);
 
