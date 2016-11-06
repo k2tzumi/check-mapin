@@ -119,7 +119,7 @@ google.setOnLoadCallback(function() {
       }
 
       // すべてのローディングが完了した。
-      $.when.apply($, deferreds).done(function(){
+      $.when.apply($, deferreds).done(function() {
         // カーソル変更
         document.body.style.cursor = 'default';
         // enable slider
@@ -137,12 +137,11 @@ google.setOnLoadCallback(function() {
       // マーカー表示
       var marker = new google.maps.Marker({
         position: position,
-        label: (i < 9) ? String(i + 1) : null,
+        // label: (i < 9) ? String(i + 1) : null,
         animation: google.maps.Animation.DROP,
         map: map,
         title: name,
-        icon: getIcon(name, (i < 9)),
-        shadow: "http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+        icon: 'https://chart.googleapis.com/chart?chst=d_map_pin_letter_withshadow&chld=' + (i + 1) + '|' + getIconColore(name) + '|000000'
       });
 
       markers.push(marker);
@@ -175,30 +174,23 @@ google.setOnLoadCallback(function() {
       if (i == 0) map.setZoom(18);
     }
 
-    function getIcon(name, nomal) {
+    function getIconColore(name) {
       var summary = JSON.parse(sessionStorage.getItem(name));
 
-      var icons = [
-        "https://maps.google.com/mapfiles/ms/icons/blue.png",
-        "https://maps.google.com/mapfiles/ms/icons/green.png",
-        "https://maps.google.com/mapfiles/ms/icons/yellow.png",
-        "https://maps.google.com/mapfiles/ms/icons/red.png",
-        "https://maps.google.com/mapfiles/ms/icons/purple.png",
-      ];
-      var dot_icons = [
-        "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-        "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
-        "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
-        "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
-        "https://maps.google.com/mapfiles/ms/icons/purple-dot.png",
+      var color = [
+        "0000FF", // blue
+        "008000", // green
+        "FFFF00", // Yellow""
+        "FF0000", // red
+        "800080", // purple
       ];
 
-      var level = Math.floor(summary.stay_total / 7);
+      var level = Math.floor(summary.check_total / 3);
 
       if (level > icons.size) {
-        return nomal ? icons[icons.size - 1] : dot_icons[icons.size - 1];
+        return color[icons.length - 1];
       } else {
-        return nomal ? icons[level] : dot_icons[level];
+        return color[level];
       }
     }
 
