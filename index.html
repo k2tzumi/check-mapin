@@ -187,7 +187,7 @@ google.setOnLoadCallback(function() {
 
       var level = Math.floor(summary.check_total / 3);
 
-      if (level > colors.length) {
+      if (level >= colors.length) {
         return colors[colors.length - 1];
       } else {
         return colors[level];
