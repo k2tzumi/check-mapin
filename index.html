@@ -177,7 +177,7 @@ google.setOnLoadCallback(function() {
     function getIconColore(name) {
       var summary = JSON.parse(sessionStorage.getItem(name));
 
-      var color = [
+      var colors = [
         "0000FF", // blue
         "008000", // green
         "FFFF00", // Yellow""
@@ -187,10 +187,10 @@ google.setOnLoadCallback(function() {
 
       var level = Math.floor(summary.check_total / 3);
 
-      if (level > icons.size) {
-        return color[icons.length - 1];
+      if (level > colors.length) {
+        return colors[colors.length - 1];
       } else {
-        return color[level];
+        return colors[level];
       }
     }
 
