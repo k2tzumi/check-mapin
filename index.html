@@ -14,14 +14,15 @@ p {line-height: 180%;}
 
 div#blind {
   position: fixed;
+  z-index: 100000;
+  background: #000000;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 999;
-  background-color: #fff;
-  background-color: rgba(0, 0, 0, 0.1);
-  text-align: center;
+  filter: alpha(opacity=0);
+  opacity: 0.0;
+  display: none;
 }
 
 .bubblingG {
@@ -202,6 +203,12 @@ google.setOnLoadCallback(function() {
     var windows = new google.maps.MVCArray();
     var deferreds = [];
 
+    // 現在地
+    geolocation().then(function(position) {
+      bounds.extend(position);
+      map.fitBounds(bounds);
+    });
+
     // For dubug
     localStorage.clear();
 
@@ -234,6 +241,7 @@ google.setOnLoadCallback(function() {
     function loadingView(flag) {
       if (flag) {
         $(document.body).append($('<div/>').attr('id', ' bind'));
+        $("#bind").show().fadeTo('slow', 0.5);
         $(".bubblingG span").show();
       } else {
         $("#blind").remove();
