@@ -11,6 +11,143 @@ p {line-height: 180%;}
   margin: 10px auto;
   background: #eee;
 }
+.bubblingG {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.1);
+	text-align: center;
+	/*width:140px;
+	height:88px;*/
+	margin: auto;
+}
+.bubblingG span {
+	display: inline-block;
+	vertical-align: middle;
+	width: 18px;
+	height: 18px;
+	margin: 44px auto;
+	background: rgb(247,255,25);
+	border-radius: 88px;
+		-o-border-radius: 88px;
+		-ms-border-radius: 88px;
+		-webkit-border-radius: 88px;
+		-moz-border-radius: 88px;
+	animation: bubblingG 1.89s infinite alternate;
+		-o-animation: bubblingG 1.89s infinite alternate;
+		-ms-animation: bubblingG 1.89s infinite alternate;
+		-webkit-animation: bubblingG 1.89s infinite alternate;
+		-moz-animation: bubblingG 1.89s infinite alternate;
+}
+
+#bubblingG_1 {
+	animation-delay: 0s;
+		-o-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+		-webkit-animation-delay: 0s;
+		-moz-animation-delay: 0s;
+}
+
+#bubblingG_2 {
+	animation-delay: 0.57s;
+		-o-animation-delay: 0.57s;
+		-ms-animation-delay: 0.57s;
+		-webkit-animation-delay: 0.57s;
+		-moz-animation-delay: 0.57s;
+}
+
+#bubblingG_3 {
+	animation-delay: 1.13s;
+		-o-animation-delay: 1.13s;
+		-ms-animation-delay: 1.13s;
+		-webkit-animation-delay: 1.13s;
+		-moz-animation-delay: 1.13s;
+}
+
+
+
+@keyframes bubblingG {
+	0% {
+		width: 18px;
+		height: 18px;
+		background-color:rgb(192,40,222);
+		transform: translateY(0);
+	}
+
+	100% {
+		width: 42px;
+		height: 42px;
+		background-color:rgb(42,68,235);
+		transform: translateY(-37px);
+	}
+}
+
+@-o-keyframes bubblingG {
+	0% {
+		width: 18px;
+		height: 18px;
+		background-color:rgb(192,40,222);
+		-o-transform: translateY(0);
+	}
+
+	100% {
+		width: 42px;
+		height: 42px;
+		background-color:rgb(42,68,235);
+		-o-transform: translateY(-37px);
+	}
+}
+
+@-ms-keyframes bubblingG {
+	0% {
+		width: 18px;
+		height: 18px;
+		background-color:rgb(192,40,222);
+		-ms-transform: translateY(0);
+	}
+
+	100% {
+		width: 42px;
+		height: 42px;
+		background-color:rgb(42,68,235);
+		-ms-transform: translateY(-37px);
+	}
+}
+
+@-webkit-keyframes bubblingG {
+	0% {
+		width: 18px;
+		height: 18px;
+		background-color:rgb(192,40,222);
+		-webkit-transform: translateY(0);
+	}
+
+	100% {
+		width: 42px;
+		height: 42px;
+		background-color:rgb(42,68,235);
+		-webkit-transform: translateY(-37px);
+	}
+}
+
+@-moz-keyframes bubblingG {
+	0% {
+		width: 18px;
+		height: 18px;
+		background-color:rgb(192,40,222);
+		-moz-transform: translateY(0);
+	}
+
+	100% {
+		width: 42px;
+		height: 42px;
+		background-color:rgb(42,68,235);
+		-moz-transform: translateY(-37px);
+	}
+}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jQRangeSlider/5.7.2/css/iThing.min.css" integrity="sha256-xPnIpkGaJddz0uHOJ2Uvd/fs5GmpCy9N9imz0EZyB7Y=" crossorigin="anonymous" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -80,10 +217,17 @@ google.setOnLoadCallback(function() {
 
       // disable slider
       $("#slider").dateRangeSlider("disable");
-      // カーソル変更
-      document.body.style.cursor = 'wait';
+      loadingView(true);
 
       query.send(handleSelectResponse);
+    }
+
+    function loadingView(flag) {
+      if (flag) {
+        $("bubblingG").fadeOut();
+      } else {
+        $("bubblingG").fadeIn();
+      }
     }
 
     function handleSelectResponse(response) {
@@ -120,11 +264,9 @@ google.setOnLoadCallback(function() {
 
       // すべてのローディングが完了した。
       $.when.apply($, deferreds).done(function() {
-        // カーソル変更
-        document.body.style.cursor = 'default';
+        loadingView(false);
         // enable slider
         $("#slider").dateRangeSlider("enable");
-        window.alert('loading done.');
       });
   	}
 
@@ -150,11 +292,12 @@ google.setOnLoadCallback(function() {
       google.maps.event.addListener(marker,
         'click',
         function(event) {
+          loadingView(true);
           //  Window Close
           allWindowClose();
-          // TODO: wait curesol
           // Hotel情報取得
           getHotelInfo(name).then(function(hotelInfo) {
+            loadingView(false);
             // 楽天情報Windows
             buildInfoWindow(hotelInfo).open(map, marker);
           }, function(err) {
@@ -452,6 +595,14 @@ google.setOnLoadCallback(function() {
 <div id="slider"></div>
 <div class="map-embed">
 <div id="map-canvas"></div>
+</div>
+<div class="bubblingG">
+	<span id="bubblingG_1">
+	</span>
+	<span id="bubblingG_2">
+	</span>
+	<span id="bubblingG_3">
+	</span>
 </div>
 </body>
 </html>
