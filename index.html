@@ -12,8 +12,11 @@ p {line-height: 180%;}
   background: #eee;
 }
 
-/* ローディング */
-.bubblingG {
+/*
+ * Miscellaneous loaders in CSS
+ * http://cssload.net/en/miscellaneous
+ */
+ .bubblingG {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -148,7 +151,11 @@ p {line-height: 180%;}
 	}
 }
 
-/* 現在地マーカー */
+/*
+ * GeoLocateMe (https://github.com/stedman/GeoLocateMe)
+ * Copyright (c) 2012 Steve Stedman
+ * Licensed under MIT (https://github.com/stedman/GeoLocateMe/blob/master/MIT-LICENSE)
+ */
 @-moz-keyframes pulsate {
   from {
     -moz-transform: scale(0.25);
@@ -255,7 +262,7 @@ google.setOnLoadCallback(function() {
     setPresentLocation();
 
     // For dubug
-    localStorage.clear();
+    // localStorage.clear();
 
     // slider作成
     createDateRangeSlider();
