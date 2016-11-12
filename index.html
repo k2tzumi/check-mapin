@@ -11,12 +11,14 @@ p {line-height: 180%;}
   margin: 10px auto;
   background: #eee;
 }
+
 div#blind {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 999;
   background-color: #fff;
   background-color: rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -75,8 +77,6 @@ div#blind {
 		-webkit-animation-delay: 1.13s;
 		-moz-animation-delay: 1.13s;
 }
-
-
 
 @keyframes bubblingG {
 	0% {
@@ -233,11 +233,11 @@ google.setOnLoadCallback(function() {
 
     function loadingView(flag) {
       if (flag) {
-        $(document.body).append($('<div/>').addClass('blind'));
-        $("bubblingG").show();
+        $(document.body).append($('<div/>').attr('id', ' bind'));
+        $(".bubblingG span").show();
       } else {
         $("#blind").remove();
-        $("bubblingG").hide();
+        $(".bubblingG span").hide();
       }
     }
 
@@ -332,11 +332,11 @@ google.setOnLoadCallback(function() {
       var summary = JSON.parse(sessionStorage.getItem(name));
 
       var colors = [
-        "0000FF", // blue
-        "008000", // green
-        "FFFF00", // Yellow""
-        "FF0000", // red
-        "800080", // purple
+        "208BF1", // blue
+        "47EA47", // green
+        "FBD301", // Yellow""
+        "FF3270", // red
+        "cc66FF", // purple
       ];
 
       var level = Math.floor(summary.check_total / 3);
