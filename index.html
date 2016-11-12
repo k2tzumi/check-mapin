@@ -178,7 +178,7 @@ p {line-height: 180%;}
   }
 }
 
-#map_canvas div[title="present_location"] {
+#map-canvas div[title="present_location"] {
   -moz-animation: pulsate 1.5s ease-in-out infinite;
   -webkit-animation: pulsate 1.5s ease-in-out infinite;
   border:1pt solid #fff;
@@ -196,12 +196,12 @@ p {line-height: 180%;}
   width:51px!important;
 }
 
-#map_canvas div[title="present_location"] img {
+#map-canvas div[title="present_location"] img {
   display:none;
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (device-width: 768px) {
-  #map_canvas div[title="present_location"] {
+  #map-canvas div[title="present_location"] {
     margin:-10px 0 0 -10px;
   }
 }
@@ -268,10 +268,10 @@ google.setOnLoadCallback(function() {
       geolocation().then(function(position) {
         var image = new google.maps.MarkerImage(
             'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Blue_sphere.svg/32px-Blue_sphere.svg.png',
-            null, // size
-            null, // origin
-            new google.maps.Point( 8, 8 ), // anchor (move to center of marker)
-            new google.maps.Size( 17, 17 ) // scaled size (required for Retina display icon)
+            null,
+            null,
+            new google.maps.Point(8, 8),
+            new google.maps.Size(17, 17)
           );
 
         new google.maps.Marker({
@@ -284,6 +284,7 @@ google.setOnLoadCallback(function() {
           visible: true
         });
         map.panTo(position);
+        map.setZoom(18);
       }, function(err) {
         console.warn(err);
       });
