@@ -12,20 +12,6 @@ p {line-height: 180%;}
   background: #eee;
 }
 
-/* ブラックアウト */
-div#blind {
-  position: fixed;
-  z-index: 100000;
-  background: #000000;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  filter: alpha(opacity=0);
-  opacity: 0.0;
-  /*display: none;*/
-}
-
 /* ローディング */
 .bubblingG {
   position: absolute;
@@ -292,7 +278,7 @@ google.setOnLoadCallback(function() {
           icon: image,
           map: map,
           optimized: false,
-          position: position,
+          position: new google.maps.LatLng(position.lat, position.log),
           title: 'present_location',
           visible: true
         });
@@ -324,11 +310,21 @@ google.setOnLoadCallback(function() {
 
     function loadingView(flag) {
       if (flag) {
-        $(document.body).append($('<div/>').attr('id', ' bind'));
-        $("#bind").show().fadeTo('slow', 0.5);
+        var layer = $('<div/>').attr('id', 'layer');
+        layer.css("z-index", "999")
+            .css("position", "absolute")
+            .css("top", "0px")
+            .css("left", "0px")
+            .css("right", "0px")
+            .css("bottom", "0px")
+            .css("background-color", "gray")
+            .css("opacity", "0.8")
+            .css("display", "none");
+        $('body').append(layer);
+        layer.show().fadeTo('slow', 0.5);
         $(".bubblingG span").show();
       } else {
-        $("#blind").remove();
+        $("#layer").remove();
         $(".bubblingG span").hide();
       }
     }
