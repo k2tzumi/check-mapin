@@ -400,7 +400,6 @@ google.setOnLoadCallback(function() {
       google.maps.event.addListener(marker,
         'click',
         function(event) {
-          loadingView(true);
           //  Window Close
           allWindowClose();
           // Hotel情報取得
@@ -605,6 +604,8 @@ google.setOnLoadCallback(function() {
       if (hotelInfo) {
         return deferred.resolve(JSON.parse(hotelInfo));
       }
+
+      loadingView(true);
 
       $.ajax({
         type: 'GET',
