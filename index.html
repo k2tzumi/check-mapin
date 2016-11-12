@@ -11,7 +11,7 @@ p {line-height: 180%;}
   margin: 10px auto;
   background: #eee;
 }
-.bubblingG {
+div#blind {
   position: fixed;
   top: 0;
   left: 0;
@@ -19,10 +19,19 @@ p {line-height: 180%;}
   height: 100%;
   background-color: #fff;
   background-color: rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.bubblingG {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -10px;
+  margin-left: -100px;
 	text-align: center;
-	/*width:140px;
-	height:88px;*/
-	margin: auto;
+	width:140px;
+	height:88px;
+	/*margin: auto;*/
 }
 .bubblingG span {
 	display: inline-block;
@@ -224,9 +233,11 @@ google.setOnLoadCallback(function() {
 
     function loadingView(flag) {
       if (flag) {
-        $("bubblingG").fadeOut();
+        $(document.body).append($('<div/>').addClass('blind'));
+        $("bubblingG").show();
       } else {
-        $("bubblingG").fadeIn();
+        $("#blind").remove();
+        $("bubblingG").hide();
       }
     }
 
