@@ -5,11 +5,21 @@
 <title>check map-in</title>
 <style type="text/css">
 p {line-height: 180%;}
+.legend {
+  float: left;
+  width: 5%;
+  text-align: center;
+  margin: 15px 0 0 15px;
+}
 #map-canvas {
-  width: 800px;
+  width: 90%;
   height: 600px;
-  margin: 10px auto;
+  margin: 10px 0 0 10px;
   background: #eee;
+}
+.license {
+  text-align: right;
+  margin: 10px 0 0 10px;
 }
 
 /*
@@ -702,6 +712,13 @@ google.setOnLoadCallback(function() {
 </head>
 <body>
 <div id="slider"></div>
+<div class="legend">
+<img src="https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.8|0|208BF1|14|b|1-2">
+<img src="https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.8|0|47EA47|14|b|3-5">
+<img src="https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.8|0|FBD301|14|b|6-8">
+<img src="https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.8|0|FF3270|14|b|9-11">
+<img src="https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.8|0|cc66FF|14|b|12-">
+</div>
 <div class="map-embed">
 <div id="map-canvas"></div>
 </div>
@@ -713,12 +730,9 @@ google.setOnLoadCallback(function() {
 	<span id="bubblingG_3">
 	</span>
 </div>
+<div class="license">
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-<img src="https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.8|0|208BF1|14|b|1-2">
-<img src="https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.8|0|47EA47|14|b|3-5">
-<img src="https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.8|0|FBD301|14|b|6-8">
-<img src="https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.8|0|FF3270|14|b|9-11">
-<img src="https://chart.googleapis.com/chart?chst=d_map_spin&chld=0.8|0|cc66FF|14|b|12-">
+</div>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
